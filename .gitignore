@@ -1,0 +1,7 @@
+
+# ignore the venv directory
+venv/
+# ignore the .vscode directory
+.vscode/
+# ignore the .env file
+.env
