@@ -1,0 +1,45 @@
+Sri Lakshmi Vilas - Tiffin & Meals Menu
+======================================================
+Last Updated: August 2026
+Service Hours: 6:30 AM - 10:00 PM Daily
+Location: North Chinna Street, Madurai
+Currency: Indian Rupee (INR)
+Purpose: Structured RAG Ingestion Sample Document
+
+--- Tiffin (Available: 6:30 AM - 10:30 AM & 4:30 PM - 7:30 PM) ---
+
+* Plain Idli (2 pcs) | Price: Rs. 38
+  - Description: Soft steamed idli served with coconut chutney and sambar.
+  - Dietary: Vegetarian, Gluten-Free
+
+* Masala Dosa | Price: Rs. 75
+  - Description: Crisp dosa with spiced potato masala filling, served with sambar and chutneys.
+  - Dietary: Vegetarian
+
+* Medu Vada (2 pcs) | Price: Rs. 42
+  - Description: Deep-fried lentil vada, served hot with sambar and coconut chutney.
+  - Dietary: Vegetarian
+
+* Ven Pongal | Price: Rs. 58
+  - Description: Soft rice and moong dal cooked with ghee, pepper, and cashews.
+  - Dietary: Vegetarian, Contains Nuts
+
+--- Meals (Available: 12:00 PM - 3:30 PM) ---
+
+* Chettinad Chicken Meals | Price: Rs. 220
+  - Description: Banana-leaf meal with spicy Chettinad-style chicken curry, rice, rasam, poriyal, and appalam. Sri Lakshmi Vilas's signature non-vegetarian meal.
+  - Dietary: Non-vegetarian, Contains Chicken
+
+* Meals (Veg Thali) | Price: Rs. 130
+  - Description: Full vegetarian banana-leaf meal with sambar, rasam, two poriyal, curd, and unlimited rice.
+  - Dietary: Vegetarian, Gluten-Free
+
+--- Beverages & Desserts ---
+
+* Filter Coffee | Price: Rs. 24
+  - Description: Freshly brewed South Indian filter coffee.
+  - Dietary: Vegetarian, Contains Dairy
+
+* Badam Milk | Price: Rs. 50
+  - Description: Warm milk flavored with almond paste, saffron, and cardamom.
+  - Dietary: Vegetarian, Contains Dairy, Contains Nuts

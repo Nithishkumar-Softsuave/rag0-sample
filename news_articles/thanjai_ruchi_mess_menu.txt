@@ -1,0 +1,45 @@
+Thanjai Ruchi Mess - Tiffin & Meals Menu
+======================================================
+Last Updated: August 2026
+Service Hours: 6:00 AM - 9:30 PM Daily
+Location: Big Bazaar Street, Thanjavur
+Currency: Indian Rupee (INR)
+Purpose: Structured RAG Ingestion Sample Document
+
+--- Tiffin (Available: 6:00 AM - 10:30 AM & 4:30 PM - 7:30 PM) ---
+
+* Plain Idli (2 pcs) | Price: Rs. 35
+  - Description: Soft steamed idli served with coconut chutney and hotel-style sambar.
+  - Dietary: Vegetarian, Gluten-Free
+
+* Thanjavur Vengaya Dosai | Price: Rs. 65
+  - Description: Crisp onion dosa topped with a generous layer of finely chopped onions and gunpowder chutney. A Ruchi Mess signature.
+  - Dietary: Vegetarian, Chef Recommendation
+
+* Medu Vada (2 pcs) | Price: Rs. 40
+  - Description: Crisp fried lentil vada served with sambar and coconut chutney.
+  - Dietary: Vegetarian
+
+* Idiyappam | Price: Rs. 50
+  - Description: Steamed rice-noodle nests served with coconut milk and vegetable stew.
+  - Dietary: Vegetarian, Gluten-Free
+
+--- Meals (Available: 12:00 PM - 3:00 PM) ---
+
+* Nel Sadam Meals | Price: Rs. 150
+  - Description: Traditional red-rice meal with sambar, rasam, poriyal, and buttermilk. Marketed as a healthier alternative to polished rice.
+  - Dietary: Vegetarian, Chef Recommendation
+
+* Sambar Rice | Price: Rs. 65
+  - Description: Rice mixed with a thick vegetable-and-lentil sambar, served with a side of appalam.
+  - Dietary: Vegetarian, Gluten-Free
+
+--- Beverages & Desserts ---
+
+* Filter Coffee | Price: Rs. 20
+  - Description: Classic South Indian filter coffee, freshly brewed.
+  - Dietary: Vegetarian, Contains Dairy
+
+* Paal Payasam | Price: Rs. 45
+  - Description: Slow-cooked milk and rice pudding with cardamom, sweetened with sugar.
+  - Dietary: Vegetarian, Contains Dairy

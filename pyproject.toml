@@ -1,0 +1,23 @@
+[project]
+name = "rag-document-chat"
+version = "0.1.0"
+description = "A beginner-friendly RAG document chat application."
+requires-python = ">=3.11"
+dependencies = [
+  "chromadb",
+  "openai",
+  "pypdf",
+  "python-docx",
+  "python-dotenv",
+  "streamlit",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+rag-chat = "rag_chat.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

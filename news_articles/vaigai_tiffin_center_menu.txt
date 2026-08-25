@@ -1,0 +1,45 @@
+Vaigai Tiffin Center - Tiffin & Meals Menu
+======================================================
+Last Updated: August 2026
+Service Hours: 6:00 AM - 10:30 PM Daily
+Location: West Masi Street, Madurai
+Currency: Indian Rupee (INR)
+Purpose: Structured RAG Ingestion Sample Document
+
+--- Tiffin (Available: 6:00 AM - 11:00 AM & 4:00 PM - 8:00 PM) ---
+
+* Plain Idli (2 pcs) | Price: Rs. 30
+  - Description: Soft steamed idli served with coconut chutney and sambar, Madurai style.
+  - Dietary: Vegetarian, Gluten-Free
+
+* Rava Dosa | Price: Rs. 60
+  - Description: Lacy, crisp semolina dosa made with rice flour and cumin, served with sambar and chutney.
+  - Dietary: Vegetarian
+
+* Medu Vada (2 pcs) | Price: Rs. 35
+  - Description: Golden fried lentil vada, crunchy outside and fluffy inside.
+  - Dietary: Vegetarian
+
+* Kari Dosai | Price: Rs. 90
+  - Description: Dosa stuffed with a spiced Madurai-style mutton kari filling. A Vaigai Tiffin Center specialty.
+  - Dietary: Non-vegetarian, Contains Mutton
+
+--- Meals (Available: 12:00 PM - 3:30 PM) ---
+
+* Meals (Veg Thali) | Price: Rs. 120
+  - Description: Banana-leaf meal with sambar, rasam, two poriyal, curd, and unlimited rice.
+  - Dietary: Vegetarian, Gluten-Free
+
+* Paruthi Paal | Price: Rs. 40
+  - Description: Cotton-seed milk sweetened with jaggery, a Madurai specialty drink served warm.
+  - Dietary: Vegetarian, Vegan
+
+--- Beverages & Desserts ---
+
+* Madurai Jigarthanda | Price: Rs. 70
+  - Description: Chilled dessert drink made with milk, almond gum (badam pisin), sarsaparilla syrup, and ice cream. Vaigai Tiffin Center's most famous item.
+  - Dietary: Vegetarian, Contains Dairy
+
+* Filter Coffee | Price: Rs. 22
+  - Description: Strong South Indian filter coffee, brewed fresh throughout the day.
+  - Dietary: Vegetarian, Contains Dairy

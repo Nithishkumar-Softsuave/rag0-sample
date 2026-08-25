@@ -1,0 +1,49 @@
+Sri Kaveri Bhavan - Tiffin & Meals Menu
+======================================================
+Last Updated: August 2026
+Service Hours: 6:30 AM - 10:00 PM Daily
+Location: Gandhi Road, Thanjavur
+Currency: Indian Rupee (INR)
+Purpose: Structured RAG Ingestion Sample Document
+
+--- Tiffin (Available: 6:30 AM - 11:00 AM & 4:00 PM - 7:00 PM) ---
+
+* Plain Idli (2 pcs) | Price: Rs. 40
+  - Description: Steamed rice cakes served with coconut chutney and sambar.
+  - Dietary: Vegetarian, Gluten-Free
+
+* Masala Dosa | Price: Rs. 70
+  - Description: Crisp rice-and-lentil crepe folded over a spiced potato filling, served with sambar and two chutneys.
+  - Dietary: Vegetarian
+
+* Medu Vada (2 pcs) | Price: Rs. 45
+  - Description: Deep-fried lentil doughnuts, crisp outside and soft inside, served with sambar.
+  - Dietary: Vegetarian
+
+* Ven Pongal | Price: Rs. 55
+  - Description: Rice and moong dal cooked soft with ghee, cracked pepper, and cumin.
+  - Dietary: Vegetarian, Gluten-Free
+
+* Rava Kesari | Price: Rs. 35
+  - Description: Sweet semolina pudding with ghee, cashews, and saffron. A Kaveri Bhavan signature dessert.
+  - Dietary: Vegetarian, Contains Nuts
+
+--- Meals (Available: 12:00 PM - 3:30 PM) ---
+
+* Kaveri Special Thali | Price: Rs. 180
+  - Description: Full-course banana-leaf meal with sambar, rasam, two poriyal, curd, papad, and unlimited rice. Kaveri Bhavan's signature meal.
+  - Dietary: Vegetarian, Chef Recommendation
+
+* Curd Rice | Price: Rs. 60
+  - Description: Cooked rice mixed with fresh curd, tempered with mustard seeds and curry leaves.
+  - Dietary: Vegetarian, Gluten-Free
+
+--- Beverages ---
+
+* Filter Coffee | Price: Rs. 25
+  - Description: Strong South Indian filter coffee with milk and chicory decoction, served in a davara-tumbler set.
+  - Dietary: Vegetarian, Contains Dairy
+
+* Buttermilk (Sambaram) | Price: Rs. 20
+  - Description: Spiced churned buttermilk with ginger, green chili, and curry leaves.
+  - Dietary: Vegetarian, Vegan option available

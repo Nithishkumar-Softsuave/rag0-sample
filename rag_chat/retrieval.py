@@ -1,0 +1,89 @@
+"""Hybrid semantic and keyword retrieval plus grounded answer generation."""
+from __future__ import annotations
+
+import math
+import re
+from collections import Counter
+
+from rag_chat.client import get_client, get_embeddings
+from rag_chat.config import get_settings
+from rag_chat.store import get_collection
+
+
+def tokenize(text: str) -> list[str]:
+    """Convert text into simple lowercase keyword tokens."""
+    return re.findall(r"[a-z0-9]+", text.lower())
+
+
+def semantic_search(question: str, limit: int) -> list[str]:
+    """Return chunk IDs ranked by embedding similarity."""
+    collection = get_collection()
+    count = collection.count()
+    if count == 0:
+        return []
+    result = collection.query(query_embeddings=[get_embeddings([question])[0]], n_results=min(limit, count))
+    return result["ids"][0]
+
+
+def keyword_search(question: str, limit: int) -> list[str]:
+    """Return chunk IDs ranked with a small in-memory BM25 implementation."""
+    stored = get_collection().get(include=["documents"])
+    documents = stored["documents"]
+    if not documents:
+        return []
+    token_lists = [tokenize(document) for document in documents]
+    lengths = [len(tokens) for tokens in token_lists]
+    average_length = sum(lengths) / len(lengths)
+    document_frequency = Counter(token for tokens in token_lists for token in set(tokens))
+    scores: list[float] = []
+    for tokens, length in zip(token_lists, lengths):
+        counts = Counter(tokens)
+        score = 0.0
+        for term in tokenize(question):
+            frequency = counts[term]
+            if not frequency:
+                continue
+            inverse_frequency = math.log(1 + (len(documents) - document_frequency[term] + 0.5) / (document_frequency[term] + 0.5))
+            score += inverse_frequency * (frequency * 2.5) / (frequency + 1.5 * (1 - 0.75 + 0.75 * length / average_length))
+        scores.append(score)
+    ranked = sorted(range(len(scores)), key=lambda index: scores[index], reverse=True)
+    return [stored["ids"][index] for index in ranked[:limit]]
+
+
+def reciprocal_rank_fusion(rank_lists: list[list[str]], k: int = 60) -> list[str]:
+    """Merge ranked lists so semantic and exact-keyword matches both matter."""
+    scores: Counter[str] = Counter()
+    for ranked_ids in rank_lists:
+        for rank, chunk_id in enumerate(ranked_ids, start=1):
+            scores[chunk_id] += 1 / (k + rank)
+    return [chunk_id for chunk_id, _ in scores.most_common()]
+
+
+def retrieve(question: str, results: int | None = None, pool: int | None = None) -> tuple[list[str], list[str]]:
+    """Return the most relevant chunk text and their source filenames."""
+    settings = get_settings()
+    results = settings.retrieval_top_k if results is None else results
+    pool = settings.retrieval_pool if pool is None else pool
+    collection = get_collection()
+    if collection.count() == 0:
+        return [], []
+    chunk_ids = reciprocal_rank_fusion([semantic_search(question, pool), keyword_search(question, pool)])[:results]
+    fetched = collection.get(ids=chunk_ids, include=["documents", "metadatas"])
+    text_by_id = dict(zip(fetched["ids"], fetched["documents"]))
+    sources = sorted({metadata["source"] for metadata in fetched["metadatas"]})
+    return [text_by_id[chunk_id] for chunk_id in chunk_ids if chunk_id in text_by_id], sources
+
+
+def generate_response(question: str, chunks: list[str]) -> str:
+    """Ask the chat model to answer only from the retrieved document context."""
+    if not chunks:
+        return "I could not find any relevant information in the indexed documents."
+    context = "\n\n".join(chunks)
+    response = get_client().chat.completions.create(
+        model=get_settings().chat_model,
+        messages=[
+            {"role": "system", "content": "Answer using only the supplied context. If it does not contain the answer, say you do not know. Keep the answer concise."},
+            {"role": "user", "content": f"Context:\n{context}\n\nQuestion:\n{question}"},
+        ],
+    )
+    return response.choices[0].message.content or "I could not generate an answer."

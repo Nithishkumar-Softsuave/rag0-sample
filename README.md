@@ -1,41 +1,68 @@
-<!-- @format -->
-# Welcome to The AI Guild 🚀
+# RAG Document Chat
 
-**This code is a part of a module in our vibrant AI community 🚀[Join the AI Guild Community](https://bit.ly/ai-guild-join), where like-minded entrepreneurs and programmers come together to build real-world AI-based solutions.**
+A small, beginner-friendly RAG application. It can index TXT, PDF, and DOCX documents into ChromaDB, retrieve information with hybrid search, and answer through OpenRouter.
 
-### What is The AI Guild?
-The AI Guild is a collaborative community designed for developers, tech enthusiasts, and entrepreneurs who want to **build practical AI tools** and solutions. Whether you’re just starting or looking to level up your skills, this is the place to dive deeper into AI in a supportive, hands-on environment.
+## Folder structure
 
-### Why Join Us?
-- **Collaborate with Like-Minded Builders**: Work alongside a community of individuals passionate about AI, sharing ideas and solving real-world problems together.
-- **Access to Exclusive Resources**: Gain entry to our Code & Template Vault, a collection of ready-to-use code snippets, templates, and AI projects.
-- **Guided Learning Paths**: Follow structured paths, from AI Basics for Builders to advanced classes like AI Solutions Lab, designed to help you apply your knowledge.
-- **Weekly Live Calls & Q&A**: Get direct support, feedback, and guidance during live sessions with the community.
-- **Real-World AI Projects**: Work on projects that make an impact, learn from others, and showcase your work.
+```text
+rag0-sample/
+├── src/rag_chat/          # Application code
+│   ├── config.py          # Environment settings and paths
+│   ├── client.py          # OpenRouter client and embeddings
+│   ├── ingestion.py       # File reading, chunking, and indexing
+│   ├── store.py           # ChromaDB collection
+│   ├── retrieval.py       # Hybrid search and answer generation
+│   ├── cli.py             # Terminal application
+│   └── ui.py              # Streamlit interface
+├── news_articles/         # Example documents
+├── data/chroma/           # Created automatically; local vector data
+├── app.py                 # Terminal entry point
+└── streamlit_app.py       # Streamlit entry point
+```
 
-### Success Stories
-Here’s what some of our members are saying:
-- **"Joining The AI Guild has accelerated my learning. I’ve already built my first AI chatbot with the help of the community!"**
-- **"The live calls and feedback have been game-changers. I’ve implemented AI automation in my business, saving hours each week."**
+## Setup
 
-### Who is This For?
-If you’re eager to:
-- Build AI tools that solve real problems
-- Collaborate and learn from experienced AI practitioners
-- Stay up-to-date with the latest in AI development
-- Turn your coding skills into actionable solutions
+1. Install Python 3.11 or newer.
+2. Create and activate a virtual environment:
 
-Then **The AI Guild** is the perfect fit for you.
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
 
-### Frequently Asked Questions
-- **Q: Do I need to be an expert to join?**
-  - **A:** Not at all! The AI Guild is designed for all skill levels, from beginners to advanced developers.
-- **Q: Will I get personalized support?**
-  - **A:** Yes! You’ll have access to live Q&A sessions and direct feedback on your projects.
-- **Q: What kind of projects can I work on?**
-  - **A:** You can start with small projects like chatbots and automation tools, and progress to more advanced AI solutions tailored to your interests.
+3. Install the application:
 
-### How to Get Started
-Want to dive deeper and get the full experience? 🚀[Join the AI Guild Community](https://bit.ly/ai-guild-join) and unlock all the benefits of our growing community.
+```powershell
+pip install -e .
+```
 
-We look forward to seeing what you’ll build with us!
+4. Copy `.env.example` to `.env`, then add an OpenRouter key. Never commit `.env`.
+
+```env
+OPENROUTER_API_KEY=your_key_here
+```
+
+## Run
+
+Start the browser UI:
+
+```powershell
+streamlit run streamlit_app.py
+```
+
+Use the terminal chat instead:
+
+```powershell
+python app.py
+python app.py "What is on the menu?"
+```
+
+## How it works
+
+1. A file is converted to text.
+2. The text is split into overlapping chunks.
+3. Chunks are embedded and saved in `data/chroma`.
+4. A question uses semantic search and keyword search together.
+5. The chat model answers only from the retrieved chunks.
+
+Re-uploading unchanged content does not embed it again. Delete `data/chroma` only if you intentionally want to rebuild the local knowledge base.

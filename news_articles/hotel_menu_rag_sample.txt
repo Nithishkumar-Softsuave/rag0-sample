@@ -1,0 +1,51 @@
+Grand Vista Hotel - In-Room Dining & Restaurant Menu
+======================================================
+Last Updated: August 2026
+Service Hours: 6:00 AM - 11:00 PM Daily
+Dial Extension: Press "4" from room phone for orders
+Currency: Singapore Dollar (SGD)
+Purpose: Structured RAG Ingestion Sample Document
+
+--- Breakfast Selection (Available: 6:00 AM - 11:00 AM) ---
+
+* Classic American Breakfast | Price: $28.00
+  - Description: Two farm-fresh eggs (any style), crispy bacon, chicken sausage, hash browns, grilled tomatoes, and toasted sourdough. Includes choice of coffee or fresh juice.
+  - Dietary: Non-vegetarian
+
+* Avocado & Poached Egg Toast | Price: $22.00
+  - Description: Smashed Hass avocado, organic poached eggs, cherry tomatoes, and microgreens on multi-grain toast.
+  - Dietary: Vegetarian, Contains Gluten
+
+* Traditional Kaya Toast Set | Price: $14.00
+  - Description: Toasted Hainanese bread with traditional coconut jam and butter, served with two soft-boiled eggs and local Kopi or Teh.
+  - Dietary: Vegetarian, Local Favorite
+
+--- All-Day Dining & Mains (Available: 11:00 AM - 10:30 PM) ---
+
+* Grand Vista Wagyu Beef Burger | Price: $34.00
+  - Description: 200g Wagyu beef patty, aged cheddar, caramelized onions, smoked bacon, and truffle mayo on a brioche bun. Served with hand-cut fries.
+  - Dietary: Contains Dairy, Gluten, Beef
+
+* Hainanese Chicken Rice | Price: $26.00
+  - Description: Tender poached chicken served with fragrant chicken-infused rice, house-made chili, ginger paste, and dark soy sauce.
+  - Dietary: Chef Recommendation, Local Favorite
+
+* Pan-Seared Atlantic Salmon | Price: $38.00
+  - Description: Served with asparagus, mashed potatoes, and a lemon butter reduction sauce.
+  - Dietary: Pescatarian, Gluten-Free
+
+* Wild Mushroom Truffle Risotto | Price: $30.00
+  - Description: Arborio rice, sautéed wild mushrooms, truffle oil, and aged parmesan cheese.
+  - Dietary: Vegetarian, Gluten-Free
+
+--- Beverages & Desserts ---
+
+* Freshly Brewed Coffee (Latte / Cappuccino / Long Black) | Price: $9.00
+  - Dietary: Vegetarian, Dairy-Free options available
+
+* Selection of TWG Teas (English Breakfast / Earl Grey / Chamomile) | Price: $10.00
+  - Dietary: Vegetarian, Vegan, Gluten-Free
+
+* Classic Tiramisu | Price: $16.00
+  - Description: Layers of ladyfingers soaked in espresso, mascarpone cream, and dark cocoa powder.
+  - Dietary: Vegetarian, Contains Dairy, Alcohol (trace)

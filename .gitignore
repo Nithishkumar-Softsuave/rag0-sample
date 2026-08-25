@@ -1,7 +1,8 @@
-
-# ignore the venv directory
-venv/
-# ignore the .vscode directory
-.vscode/
-# ignore the .env file
 .env
+.venv/
+__pycache__/
+*.py[cod]
+data/chroma/
+.streamlit/
+docs
+chroma_persistent_storage
