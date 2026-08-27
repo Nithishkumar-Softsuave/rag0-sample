@@ -24,6 +24,7 @@ class Settings:
     chunk_overlap: int
     retrieval_top_k: int
     retrieval_pool: int
+    rerank_candidates: int  # WEEK-4 CHANGE
 
 
 def get_settings() -> Settings:
@@ -39,4 +40,5 @@ def get_settings() -> Settings:
         chunk_overlap=int(os.getenv("CHUNK_OVERLAP", "200")),
         retrieval_top_k=int(os.getenv("RETRIEVAL_TOP_K", "3")),
         retrieval_pool=int(os.getenv("RETRIEVAL_POOL", "15")),
+        rerank_candidates=int(os.getenv("RETRIEVAL_RERANK_CANDIDATES", "8")),  # WEEK-4 CHANGE
     )

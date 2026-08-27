@@ -7,6 +7,7 @@ from collections import Counter
 
 from rag_chat.client import get_client, get_embeddings
 from rag_chat.config import get_settings
+from rag_chat.reranking import rerank  # WEEK-4 CHANGE
 from rag_chat.store import get_collection
 
 
@@ -67,10 +68,30 @@ def retrieve(question: str, results: int | None = None, pool: int | None = None)
     collection = get_collection()
     if collection.count() == 0:
         return [], []
-    chunk_ids = reciprocal_rank_fusion([semantic_search(question, pool), keyword_search(question, pool)])[:results]
-    fetched = collection.get(ids=chunk_ids, include=["documents", "metadatas"])
-    text_by_id = dict(zip(fetched["ids"], fetched["documents"]))
-    sources = sorted({metadata["source"] for metadata in fetched["metadatas"]})
+
+    # This part is unchanged from week 3: hybrid search decides which
+    # documents are even in the running.
+    fused_ids = reciprocal_rank_fusion([semantic_search(question, pool), keyword_search(question, pool)])
+
+    # WEEK-4 CHANGE: instead of trusting the fused order directly and slicing
+    # straight to `results`, take a wider window of fused candidates and let
+    # the reranker (rag_chat/reranking.py) judge each one against the full
+    # question before trimming down to `results`. This is what tells two
+    # near-duplicate chunks (e.g. two shops' "Filter Coffee" entries) apart.
+    candidate_ids = fused_ids[: settings.rerank_candidates]
+    candidates = collection.get(ids=candidate_ids, include=["documents", "metadatas"])
+    text_by_id = dict(zip(candidates["ids"], candidates["documents"]))
+    metadata_by_id = dict(zip(candidates["ids"], candidates["metadatas"]))
+    ordered_candidates = [chunk_id for chunk_id in candidate_ids if chunk_id in text_by_id]
+
+    chunk_ids = rerank(
+        question,
+        ordered_candidates,
+        [text_by_id[chunk_id] for chunk_id in ordered_candidates],
+        top_n=results,
+    )
+
+    sources = sorted({metadata_by_id[chunk_id]["source"] for chunk_id in chunk_ids if chunk_id in metadata_by_id})
     return [text_by_id[chunk_id] for chunk_id in chunk_ids if chunk_id in text_by_id], sources
 
 
