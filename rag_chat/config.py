@@ -25,6 +25,7 @@ class Settings:
     retrieval_top_k: int
     retrieval_pool: int
     rerank_candidates: int  # WEEK-4 CHANGE
+    langsmith_tracing: bool  # WEEK-6 CHANGE
 
 
 def get_settings() -> Settings:
@@ -41,4 +42,5 @@ def get_settings() -> Settings:
         retrieval_top_k=int(os.getenv("RETRIEVAL_TOP_K", "3")),
         retrieval_pool=int(os.getenv("RETRIEVAL_POOL", "15")),
         rerank_candidates=int(os.getenv("RETRIEVAL_RERANK_CANDIDATES", "8")),  # WEEK-4 CHANGE
+        langsmith_tracing=os.getenv("LANGSMITH_TRACING", "false").lower() == "true",  # WEEK-6 CHANGE
     )

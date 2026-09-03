@@ -3,6 +3,7 @@
 __pycache__/
 *.py[cod]
 data/chroma/
+data/query-log.jsonl
 .streamlit/
 docs
 chroma_persistent_storage

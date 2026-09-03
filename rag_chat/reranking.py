@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import json
 
-from rag_chat.client import get_client
+from rag_chat.client import get_client, record_usage
 from rag_chat.config import get_settings
 
 # WEEK-4 CHANGE: the reranker's instructions. Deliberately calls out exact
@@ -66,13 +66,15 @@ def rerank(question: str, chunk_ids: list[str], chunk_texts: list[str], top_n: i
     if len(chunk_ids) <= 1:
         return chunk_ids[:top_n]
 
+    model = get_settings().chat_model
     response = get_client().chat.completions.create(
-        model=get_settings().chat_model,
+        model=model,
         messages=[
             {"role": "system", "content": RERANK_SYSTEM_PROMPT},
             {"role": "user", "content": build_rerank_prompt(question, chunk_texts)},
         ],
     )
+    record_usage(response.usage, model)  # WEEK-6 CHANGE
     order = parse_rank_order(response.choices[0].message.content or "", len(chunk_ids))
     ranked_ids = [chunk_ids[index - 1] for index in order if 1 <= index <= len(chunk_ids)]
 

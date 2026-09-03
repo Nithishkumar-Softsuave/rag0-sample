@@ -5,6 +5,7 @@ description = "A beginner-friendly RAG document chat application."
 requires-python = ">=3.11"
 dependencies = [
   "chromadb",
+  "langsmith",
   "openai",
   "pypdf",
   "python-docx",
