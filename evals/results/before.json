@@ -1,0 +1,1385 @@
+[
+  {
+    "id": 1,
+    "question": "What is the price of the Wagyu burger at Grand Vista Hotel?",
+    "group": "none",
+    "passed": true,
+    "pass_rate": 1.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "CORRECT",
+    "judge_reason": "The assistant correctly states the price attached to the correct restaurant.",
+    "sources": [
+      "hotel_menu_rag_sample.txt"
+    ],
+    "answer": "The price of the Grand Vista Wagyu Beef Burger is $34.00.",
+    "trials": [
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant correctly states the price attached to the correct restaurant.",
+        "sources": [
+          "hotel_menu_rag_sample.txt"
+        ],
+        "answer": "The price of the Grand Vista Wagyu Beef Burger is $34.00."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant's answer accurately reflects the price of the Wagyu burger at the correct restaurant.",
+        "sources": [
+          "hotel_menu_rag_sample.txt"
+        ],
+        "answer": "The price of the Wagyu burger at Grand Vista Hotel is $34.00."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant correctly states the price of the Wagyu burger at the Grand Vista Hotel.",
+        "sources": [
+          "hotel_menu_rag_sample.txt"
+        ],
+        "answer": "The price of the Wagyu burger at Grand Vista Hotel is $34.00."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "question": "What is Sri Kaveri Bhavan's semolina dessert?",
+    "group": "none",
+    "passed": true,
+    "pass_rate": 1.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "CORRECT",
+    "judge_reason": "The assistant's answer correctly identifies the semolina dessert.",
+    "sources": [
+      "sri_kaveri_bhavan_menu.txt",
+      "vaigai_tiffin_center_menu.txt"
+    ],
+    "answer": "The semolina dessert at Sri Kaveri Bhavan is Rava Kesari.",
+    "trials": [
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant's answer correctly identifies the semolina dessert.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The semolina dessert at Sri Kaveri Bhavan is Rava Kesari."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer correctly identifies the semolina dessert as Rava Kesari.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "Sri Kaveri Bhavan's semolina dessert is Rava Kesari."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer correctly identifies the semolina dessert without providing incorrect pricing or details.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt"
+        ],
+        "answer": "Rava Kesari"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "question": "What is Vaigai Tiffin Center's famous drink?",
+    "group": "none",
+    "passed": true,
+    "pass_rate": 1.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "CORRECT",
+    "judge_reason": "The assistant correctly identified the famous drink without providing an incorrect price or attribution.",
+    "sources": [
+      "vaigai_tiffin_center_menu.txt"
+    ],
+    "answer": "Madurai Jigarthanda",
+    "trials": [
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant correctly identified the famous drink without providing an incorrect price or attribution.",
+        "sources": [
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "Madurai Jigarthanda"
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant correctly identifies the famous drink without contradicting the reference.",
+        "sources": [
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "Madurai Jigarthanda"
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer identifies the famous drink of Vaigai Tiffin Center without contradicting the ground truth.",
+        "sources": [
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "Madurai Jigarthanda"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "question": "Who serves Chettinad Chicken Meals?",
+    "group": "none",
+    "passed": true,
+    "pass_rate": 1.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "CORRECT",
+    "judge_reason": "The assistant's answer correctly attributes the Chettinad Chicken Meals to Sri Lakshmi Vilas.",
+    "sources": [
+      "sri_lakshmi_vilas_menu.txt",
+      "thanjai_ruchi_mess_menu.txt"
+    ],
+    "answer": "Sri Lakshmi Vilas serves Chettinad Chicken Meals.",
+    "trials": [
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant's answer correctly attributes the Chettinad Chicken Meals to Sri Lakshmi Vilas.",
+        "sources": [
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "Sri Lakshmi Vilas serves Chettinad Chicken Meals."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant accurately states that Sri Lakshmi Vilas serves Chettinad Chicken Meals.",
+        "sources": [
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "Sri Lakshmi Vilas serves Chettinad Chicken Meals."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant correctly attributed the information to the right entity.",
+        "sources": [
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "Sri Lakshmi Vilas serves Chettinad Chicken Meals."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "question": "What is the price of Filter Coffee at Thanjai Ruchi Mess?",
+    "group": "A",
+    "passed": false,
+    "pass_rate": 0.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "INCORRECT",
+    "judge_reason": "The price stated for Filter Coffee at Thanjai Ruchi Mess is incorrect.",
+    "sources": [
+      "sri_kaveri_bhavan_menu.txt",
+      "sri_lakshmi_vilas_menu.txt",
+      "thanjai_ruchi_mess_menu.txt"
+    ],
+    "answer": "The price of Filter Coffee at Thanjai Ruchi Mess is Rs. 25 during Tiffin hours and Rs. 24 during Beverages & Desserts.",
+    "trials": [
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The price stated for Filter Coffee at Thanjai Ruchi Mess is incorrect.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "The price of Filter Coffee at Thanjai Ruchi Mess is Rs. 25 during Tiffin hours and Rs. 24 during Beverages & Desserts."
+      },
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The price stated by the assistant is not the same as the reference answer.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The price of Filter Coffee at Thanjai Ruchi Mess is Rs. 25."
+      },
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The assistant provided the wrong price for Filter Coffee at Thanjai Ruchi Mess.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "The price of Filter Coffee at Thanjai Ruchi Mess is Rs. 25."
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "question": "What is the price of Plain Idli at Vaigai Tiffin Center?",
+    "group": "none",
+    "passed": true,
+    "pass_rate": 1.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "CORRECT",
+    "judge_reason": "The assistant's answer accurately states the price attributed to the correct restaurant.",
+    "sources": [
+      "sri_lakshmi_vilas_menu.txt",
+      "thanjai_ruchi_mess_menu.txt",
+      "vaigai_tiffin_center_menu.txt"
+    ],
+    "answer": "The price of Plain Idli at Vaigai Tiffin Center is Rs. 30.",
+    "trials": [
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant's answer accurately states the price attributed to the correct restaurant.",
+        "sources": [
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The price of Plain Idli at Vaigai Tiffin Center is Rs. 30."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant accurately stated the price for the correct restaurant.",
+        "sources": [
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The price of Plain Idli at Vaigai Tiffin Center is Rs. 30."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer correctly states the price of Plain Idli at the specified restaurant.",
+        "sources": [
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The price of Plain Idli at Vaigai Tiffin Center is Rs. 30."
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "question": "What is the price of Medu Vada at Sri Lakshmi Vilas?",
+    "group": "none",
+    "passed": true,
+    "pass_rate": 1.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "CORRECT",
+    "judge_reason": "The assistant's answer is factually correct and matches the ground truth.",
+    "sources": [
+      "sri_kaveri_bhavan_menu.txt",
+      "sri_lakshmi_vilas_menu.txt"
+    ],
+    "answer": "The price of Medu Vada at Sri Lakshmi Vilas is Rs. 42.",
+    "trials": [
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant's answer is factually correct and matches the ground truth.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt"
+        ],
+        "answer": "The price of Medu Vada at Sri Lakshmi Vilas is Rs. 42."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer correctly attributes the price to the correct restaurant.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt"
+        ],
+        "answer": "The price of Medu Vada at Sri Lakshmi Vilas is Rs. 42."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant correctly stated the price of Medu Vada at the right restaurant.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The price of Medu Vada at Sri Lakshmi Vilas is Rs. 42."
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "question": "What is the price of Ven Pongal at Sri Kaveri Bhavan?",
+    "group": "none",
+    "passed": true,
+    "pass_rate": 1.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "CORRECT",
+    "judge_reason": "The answer accurately states the price for Ven Pongal at the correct restaurant.",
+    "sources": [
+      "sri_kaveri_bhavan_menu.txt",
+      "sri_lakshmi_vilas_menu.txt"
+    ],
+    "answer": "The price of Ven Pongal at Sri Kaveri Bhavan is Rs. 55.",
+    "trials": [
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer accurately states the price for Ven Pongal at the correct restaurant.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt"
+        ],
+        "answer": "The price of Ven Pongal at Sri Kaveri Bhavan is Rs. 55."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant's answer matches the ground truth.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt"
+        ],
+        "answer": "The price of Ven Pongal at Sri Kaveri Bhavan is Rs. 55."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant's answer accurately states the price attributed to the correct restaurant.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt"
+        ],
+        "answer": "The price of Ven Pongal at Sri Kaveri Bhavan is Rs. 55."
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "question": "What is the price of Plain Idli at Thanjai Ruchi Mess?",
+    "group": "none",
+    "passed": true,
+    "pass_rate": 1.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "CORRECT",
+    "judge_reason": "The assistant accurately stated the price of Plain Idli at Thanjai Ruchi Mess.",
+    "sources": [
+      "sri_kaveri_bhavan_menu.txt",
+      "sri_lakshmi_vilas_menu.txt",
+      "thanjai_ruchi_mess_menu.txt"
+    ],
+    "answer": "The price of Plain Idli at Thanjai Ruchi Mess is Rs. 35.",
+    "trials": [
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant accurately stated the price of Plain Idli at Thanjai Ruchi Mess.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "The price of Plain Idli at Thanjai Ruchi Mess is Rs. 35."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant accurately stated the price attributed to the correct restaurant.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "The price of Plain Idli at Thanjai Ruchi Mess is Rs. 35."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant's answer correctly states the price of Plain Idli at the correct restaurant.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "The price of Plain Idli at Thanjai Ruchi Mess is Rs. 35."
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "question": "What is the price of Butter Chicken at Thanjai Ruchi Mess?",
+    "group": "none",
+    "passed": true,
+    "pass_rate": 1.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "SKIPPED",
+    "judge_reason": "Refusal case -- rule check only.",
+    "sources": [
+      "hotel_menu_rag_sample.txt",
+      "sri_lakshmi_vilas_menu.txt",
+      "thanjai_ruchi_mess_menu.txt"
+    ],
+    "answer": "I do not know.",
+    "trials": [
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "SKIPPED",
+        "judge_reason": "Refusal case -- rule check only.",
+        "sources": [
+          "hotel_menu_rag_sample.txt",
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "I do not know."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "SKIPPED",
+        "judge_reason": "Refusal case -- rule check only.",
+        "sources": [
+          "hotel_menu_rag_sample.txt",
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "I do not know."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "SKIPPED",
+        "judge_reason": "Refusal case -- rule check only.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "I do not know."
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "question": "What is the price of filter coffee in Thanjavur?",
+    "group": "A",
+    "passed": false,
+    "pass_rate": 0.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "INCORRECT",
+    "judge_reason": "The answer incorrectly states the price of filter coffee as Rs. 22 instead of the correct prices at specific shops.",
+    "sources": [
+      "sri_kaveri_bhavan_menu.txt",
+      "thanjai_ruchi_mess_menu.txt",
+      "vaigai_tiffin_center_menu.txt"
+    ],
+    "answer": "The price of filter coffee in Thanjavur is Rs. 22.",
+    "trials": [
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The answer incorrectly states the price of filter coffee as Rs. 22 instead of the correct prices at specific shops.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The price of filter coffee in Thanjavur is Rs. 22."
+      },
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The answer provides an incorrect price and does not attribute it to the correct shops.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The price of filter coffee in Thanjavur is Rs. 22."
+      },
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The answer provides an incorrect price not matching the known shops.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The price of filter coffee in Thanjavur is Rs. 22."
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "question": "Which shop has the cheapest filter coffee, and how much is it?",
+    "group": "A",
+    "passed": false,
+    "pass_rate": 0.0,
+    "source_check": false,
+    "refusal_check": true,
+    "judge_verdict": "INCORRECT",
+    "judge_reason": "The answer incorrectly attributes the price to a general section instead of the specific shop, Thanjai Ruchi Mess.",
+    "sources": [
+      "sri_kaveri_bhavan_menu.txt",
+      "thanjai_ruchi_mess_menu.txt",
+      "vaigai_tiffin_center_menu.txt"
+    ],
+    "answer": "The cheapest filter coffee is from the Beverage & Desserts section at Rs. 20.",
+    "trials": [
+      {
+        "passed": false,
+        "source_check": false,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The answer incorrectly attributes the price to a general section instead of the specific shop, Thanjai Ruchi Mess.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The cheapest filter coffee is from the Beverage & Desserts section at Rs. 20."
+      },
+      {
+        "passed": false,
+        "source_check": false,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The answer does not specify the shop that offers the coffee.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The cheapest filter coffee is available for Rs. 20."
+      },
+      {
+        "passed": false,
+        "source_check": false,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The answer attributes the price to the wrong shop.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The cheapest filter coffee is from igai Tiffin Center, priced at Rs. 22."
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "question": "How much does filter coffee cost at \"Ruchi Mess\"?",
+    "group": "A",
+    "passed": false,
+    "pass_rate": 0.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "INCORRECT",
+    "judge_reason": "The price is incorrectly attributed to Ruchi Mess instead of Thanjai Ruchi Mess.",
+    "sources": [
+      "sri_kaveri_bhavan_menu.txt",
+      "sri_lakshmi_vilas_menu.txt",
+      "thanjai_ruchi_mess_menu.txt"
+    ],
+    "answer": "Filter coffee costs Rs. 24 at Ruchi Mess.",
+    "trials": [
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The price is incorrectly attributed to Ruchi Mess instead of Thanjai Ruchi Mess.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "Filter coffee costs Rs. 24 at Ruchi Mess."
+      },
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The price is attributed to the wrong shop.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "Filter coffee costs Rs. 24 at \"Ruchi Mess\"."
+      },
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The price for filter coffee is incorrectly attributed to the wrong restaurant.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "Filter coffee costs Rs. 25 at Thanjai Ruchi Mess."
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "question": "What time does Sri Lakshmi Vilas open?",
+    "group": "none",
+    "passed": true,
+    "pass_rate": 1.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "CORRECT",
+    "judge_reason": "The assistant's answer accurately states the opening time of Sri Lakshmi Vilas.",
+    "sources": [
+      "sri_kaveri_bhavan_menu.txt",
+      "sri_lakshmi_vilas_menu.txt"
+    ],
+    "answer": "Sri Lakshmi Vilas opens at 6:30 AM.",
+    "trials": [
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant's answer accurately states the opening time of Sri Lakshmi Vilas.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt"
+        ],
+        "answer": "Sri Lakshmi Vilas opens at 6:30 AM."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant's answer correctly states the opening time for Sri Lakshmi Vilas.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt"
+        ],
+        "answer": "Sri Lakshmi Vilas opens at 6:30 AM."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant provided the correct opening time for Sri Lakshmi Vilas.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt"
+        ],
+        "answer": "Sri Lakshmi Vilas opens at 6:30 AM."
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "question": "What currency does Grand Vista Hotel price its menu in?",
+    "group": "none",
+    "passed": true,
+    "pass_rate": 1.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "CORRECT",
+    "judge_reason": "The answer accurately states the currency used by Grand Vista Hotel.",
+    "sources": [
+      "hotel_menu_rag_sample.txt",
+      "sri_kaveri_bhavan_menu.txt"
+    ],
+    "answer": "Singapore Dollar (SGD)",
+    "trials": [
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer accurately states the currency used by Grand Vista Hotel.",
+        "sources": [
+          "hotel_menu_rag_sample.txt",
+          "sri_kaveri_bhavan_menu.txt"
+        ],
+        "answer": "Singapore Dollar (SGD)"
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant's answer matches the ground truth.",
+        "sources": [
+          "hotel_menu_rag_sample.txt",
+          "sri_kaveri_bhavan_menu.txt"
+        ],
+        "answer": "Singapore Dollar (SGD)"
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant's answer matches the ground truth accurately.",
+        "sources": [
+          "hotel_menu_rag_sample.txt",
+          "sri_kaveri_bhavan_menu.txt"
+        ],
+        "answer": "Singapore Dollar (SGD)"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "question": "What is Kari Dosai and where can I get it?",
+    "group": "none",
+    "passed": true,
+    "pass_rate": 1.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "CORRECT",
+    "judge_reason": "The answer accurately describes Kari Dosai and attributes it correctly to Vaigai Tiffin Center.",
+    "sources": [
+      "sri_kaveri_bhavan_menu.txt",
+      "vaigai_tiffin_center_menu.txt"
+    ],
+    "answer": "Kari Dosai is a dosa stuffed with a spiced Madurai-style mutton kari filling. It is available at Vaigai Tiffin Center for Rs. 90.",
+    "trials": [
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer accurately describes Kari Dosai and attributes it correctly to Vaigai Tiffin Center.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "Kari Dosai is a dosa stuffed with a spiced Madurai-style mutton kari filling. It is available at Vaigai Tiffin Center for Rs. 90."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant accurately describes Kari Dosai and correctly attributes it to the Vaigai Tiffin Center.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "Kari Dosai is a dosa stuffed with a spiced Madurai-style mutton kari filling, which is a specialty of the Vaigai Tiffin Center. You can get it at the Vaigai Tiffin Center located on West Masi Street, Madurai."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant accurately describes Kari Dosai and correctly attributes it to Vaigai Tiffin Center.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "Kari Dosai is a dosa stuffed with a spiced Madurai-style mutton kari filling. You can get it at Vaigai Tiffin Center, located on West Masi Street, Madurai."
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "question": "What is the priciest item on any menu, and which restaurant sells it?",
+    "group": "none",
+    "passed": true,
+    "pass_rate": 1.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "CORRECT",
+    "judge_reason": "The answer accurately states the priciest item and its correct restaurant.",
+    "sources": [
+      "hotel_menu_rag_sample.txt",
+      "vaigai_tiffin_center_menu.txt"
+    ],
+    "answer": "The priciest item on the menu is the Pan-Seared Atlantic Salmon at Grand Vista Hotel, priced at $38.00.",
+    "trials": [
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer accurately states the priciest item and its correct restaurant.",
+        "sources": [
+          "hotel_menu_rag_sample.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The priciest item on the menu is the Pan-Seared Atlantic Salmon at Grand Vista Hotel, priced at $38.00."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer accurately reflects the information from the ground truth.",
+        "sources": [
+          "hotel_menu_rag_sample.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The priciest item is the Pan-Seared Atlantic Salmon at Grand Vista Hotel, priced at $38.00."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer accurately reflects the information provided in the ground truth.",
+        "sources": [
+          "hotel_menu_rag_sample.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The priciest item is the Pan-Seared Atlantic Salmon, priced at $38.00, and it is sold at the Grand Vista Hotel."
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "question": "Which shop has the cheapest Medu Vada, and what does each shop charge for it?",
+    "group": "C",
+    "passed": false,
+    "pass_rate": 0.0,
+    "source_check": false,
+    "refusal_check": true,
+    "judge_verdict": "CORRECT",
+    "judge_reason": "The assistant correctly identifies the cheapest shop and provides accurate prices for other shops.",
+    "sources": [
+      "sri_lakshmi_vilas_menu.txt",
+      "thanjai_ruchi_mess_menu.txt",
+      "vaigai_tiffin_center_menu.txt"
+    ],
+    "answer": "Vaigai Tiffin Center has the cheapest Medu Vada at Rs. 35. \n\nThanjai Ruchi Mess charges Rs. 40 for Medu Vada, and Sri Lakshmi Vilas charges Rs. 42 for it.",
+    "trials": [
+      {
+        "passed": false,
+        "source_check": false,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant correctly identifies the cheapest shop and provides accurate prices for other shops.",
+        "sources": [
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "Vaigai Tiffin Center has the cheapest Medu Vada at Rs. 35. \n\nThanjai Ruchi Mess charges Rs. 40 for Medu Vada, and Sri Lakshmi Vilas charges Rs. 42 for it."
+      },
+      {
+        "passed": false,
+        "source_check": false,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant correctly identifies the cheapest shop and provides accurate prices for other shops without contradiction.",
+        "sources": [
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "Vaigai Tiffin Center has the cheapest Medu Vada at Rs. 35. \n\nThanjai Ruchi Mess charges Rs. 40 for Medu Vada. \n\nSri Lakshmi Vilas charges Rs. 42 for Medu Vada."
+      },
+      {
+        "passed": false,
+        "source_check": false,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The assistant omitted the price for Sri Kaveri Bhavan, which is a crucial detail.",
+        "sources": [
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "Vaigai Tiffin Center has the cheapest Medu Vada, priced at Rs. 35. The other shops charge the following: \n\n- Thanjai Ruchi Mess: Rs. 40\n- Sri Lakshmi Vilas: Rs. 42"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "question": "What is Thanjai Ruchi Mess's signature tiffin dish?",
+    "group": "none",
+    "passed": true,
+    "pass_rate": 1.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "CORRECT",
+    "judge_reason": "The answer correctly identifies Thanjavur Vengaya Dosai as Thanjai Ruchi Mess's signature tiffin dish.",
+    "sources": [
+      "thanjai_ruchi_mess_menu.txt",
+      "vaigai_tiffin_center_menu.txt"
+    ],
+    "answer": "Thanjavur Vengaya Dosai",
+    "trials": [
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer correctly identifies Thanjavur Vengaya Dosai as Thanjai Ruchi Mess's signature tiffin dish.",
+        "sources": [
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "Thanjavur Vengaya Dosai"
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer matches the reference ground truth.",
+        "sources": [
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "Thanjavur Vengaya Dosai"
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer correctly identifies Thanjai Ruchi Mess's signature tiffin dish.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "Thanjavur Vengaya Dosai."
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "question": "How much for a Pongal at Lakshmi Vilas?",
+    "group": "none",
+    "passed": false,
+    "pass_rate": 0.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "INCORRECT",
+    "judge_reason": "The assistant incorrectly attributed the price to Sri Lakshmi Vilas instead of Lakshmi Vilas.",
+    "sources": [
+      "sri_kaveri_bhavan_menu.txt",
+      "sri_lakshmi_vilas_menu.txt"
+    ],
+    "answer": "The price for Ven Pongal at Sri Lakshmi Vilas is Rs. 58.",
+    "trials": [
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The assistant incorrectly attributed the price to Sri Lakshmi Vilas instead of Lakshmi Vilas.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt"
+        ],
+        "answer": "The price for Ven Pongal at Sri Lakshmi Vilas is Rs. 58."
+      },
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The assistant incorrectly referenced 'Sri Lakshmi Vilas' instead of 'Lakshmi Vilas'.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt"
+        ],
+        "answer": "The price for Ven Pongal at Sri Lakshmi Vilas is Rs. 58."
+      },
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The assistant incorrectly attributed the price to Sri Lakshmi Vilas instead of Lakshmi Vilas.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt"
+        ],
+        "answer": "The price for Ven Pongal at Sri Lakshmi Vilas is Rs. 58."
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "question": "What vegan items are available across these menus?",
+    "group": "E",
+    "passed": false,
+    "pass_rate": 0.0,
+    "source_check": false,
+    "refusal_check": true,
+    "judge_verdict": "INCORRECT",
+    "judge_reason": "The answer incorrectly attributes 'Buttermilk' to 'Sambaram' instead of 'Sri Kaveri Bhavan'.",
+    "sources": [
+      "sri_kaveri_bhavan_menu.txt",
+      "thanjai_ruchi_mess_menu.txt",
+      "vaigai_tiffin_center_menu.txt"
+    ],
+    "answer": "The vegan items available are:\n\n1. Buttermilk (Sambaram) - Vegan option available.\n2. Paruthi Paal - Vegetarian, Vegan.\n3. Idiyappam - Vegetarian, Gluten-Free.",
+    "trials": [
+      {
+        "passed": false,
+        "source_check": false,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The answer incorrectly attributes 'Buttermilk' to 'Sambaram' instead of 'Sri Kaveri Bhavan'.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The vegan items available are:\n\n1. Buttermilk (Sambaram) - Vegan option available.\n2. Paruthi Paal - Vegetarian, Vegan.\n3. Idiyappam - Vegetarian, Gluten-Free."
+      },
+      {
+        "passed": false,
+        "source_check": false,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "Idiyappam is incorrectly included as vegan.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The vegan items available across these menus are:\n\n1. Buttermilk (Sambaram) - with a vegan option available.\n2. Paruthi Paal\n3. Idiyappam"
+      },
+      {
+        "passed": false,
+        "source_check": false,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The answer incorrectly attributes vegan status to Idiyappam.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "thanjai_ruchi_mess_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The vegan items available are:\n\n1. Buttermilk (Sambaram) - Vegan option available\n2. Paruthi Paal\n3. Idiyappam"
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "question": "What's a good vegetarian breakfast option?",
+    "group": "none",
+    "passed": true,
+    "pass_rate": 1.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "CORRECT",
+    "judge_reason": "The answer correctly attributes the vegetarian breakfast option to a real menu entry.",
+    "sources": [
+      "hotel_menu_rag_sample.txt",
+      "sri_kaveri_bhavan_menu.txt"
+    ],
+    "answer": "A good vegetarian breakfast option is the Avocado & Poached Egg Toast priced at $22.00.",
+    "trials": [
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer correctly attributes the vegetarian breakfast option to a real menu entry.",
+        "sources": [
+          "hotel_menu_rag_sample.txt",
+          "sri_kaveri_bhavan_menu.txt"
+        ],
+        "answer": "A good vegetarian breakfast option is the Avocado & Poached Egg Toast priced at $22.00."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The assistant correctly identifies a vegetarian breakfast option from a real menu entry.",
+        "sources": [
+          "hotel_menu_rag_sample.txt",
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt"
+        ],
+        "answer": "A good vegetarian breakfast option is the Avocado & Poached Egg Toast, priced at $22.00."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer accurately cites a vegetarian breakfast option from a real menu.",
+        "sources": [
+          "hotel_menu_rag_sample.txt",
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt"
+        ],
+        "answer": "A good vegetarian breakfast option is the Avocado & Poached Egg Toast, priced at $22.00."
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "question": "What is the difference in Filter Coffee price between Thanjai Ruchi Mess and Sri Kaveri Bhavan?",
+    "group": "D",
+    "passed": false,
+    "pass_rate": 0.0,
+    "source_check": true,
+    "refusal_check": false,
+    "judge_verdict": "CORRECT",
+    "judge_reason": "The answer does not contradict the ground truth.",
+    "sources": [
+      "sri_kaveri_bhavan_menu.txt",
+      "thanjai_ruchi_mess_menu.txt"
+    ],
+    "answer": "I do not know.",
+    "trials": [
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": false,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer does not contradict the ground truth.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "I do not know."
+      },
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": false,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer does not contradict the ground truth.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "I do not know."
+      },
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": false,
+        "judge_verdict": "CORRECT",
+        "judge_reason": "The answer does not contradict the ground truth and simply states a lack of knowledge.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "thanjai_ruchi_mess_menu.txt"
+        ],
+        "answer": "I do not know."
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "question": "Does Sri Kaveri Bhavan serve pizza?",
+    "group": "none",
+    "passed": true,
+    "pass_rate": 1.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "SKIPPED",
+    "judge_reason": "Refusal case -- rule check only.",
+    "sources": [
+      "sri_kaveri_bhavan_menu.txt",
+      "sri_lakshmi_vilas_menu.txt"
+    ],
+    "answer": "I do not know.",
+    "trials": [
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "SKIPPED",
+        "judge_reason": "Refusal case -- rule check only.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt"
+        ],
+        "answer": "I do not know."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "SKIPPED",
+        "judge_reason": "Refusal case -- rule check only.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt"
+        ],
+        "answer": "I do not know."
+      },
+      {
+        "passed": true,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "SKIPPED",
+        "judge_reason": "Refusal case -- rule check only.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt"
+        ],
+        "answer": "I do not know."
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "question": "What's on the menu at the restaurant on Gandhi Road?",
+    "group": "B",
+    "passed": false,
+    "pass_rate": 0.0,
+    "source_check": true,
+    "refusal_check": true,
+    "judge_verdict": "INCORRECT",
+    "judge_reason": "The assistant's answer includes items and prices not listed in the reference for Sri Kaveri Bhavan.",
+    "sources": [
+      "sri_kaveri_bhavan_menu.txt",
+      "sri_lakshmi_vilas_menu.txt",
+      "vaigai_tiffin_center_menu.txt"
+    ],
+    "answer": "The menu includes:\n\n**Tiffin (Available: 6:30 AM - 11:00 AM & 4:00 PM - 7:00 PM)**\n- Plain Idli (2 pcs) - Rs. 40\n- Masala Dosa - Rs. 70\n- Medu Vada (2 pcs) - Rs. 45\n- Ven Pongal - Rs. 55\n- Kari Dosai - Rs. 90\n\n**Meals (Available: 12:00 PM - 3:30 PM)**\n- Meals (Veg Thali) - Rs. 120\n- Chettinad Chicken Meals - Rs. 220\n\n**Beverages & Desserts**\n- Madurai Jigarthanda - Rs. 70\n- Filter Coffee - Rs. 22\n- Badam Milk - Rs. 50",
+    "trials": [
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The assistant's answer includes items and prices not listed in the reference for Sri Kaveri Bhavan.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The menu includes:\n\n**Tiffin (Available: 6:30 AM - 11:00 AM & 4:00 PM - 7:00 PM)**\n- Plain Idli (2 pcs) - Rs. 40\n- Masala Dosa - Rs. 70\n- Medu Vada (2 pcs) - Rs. 45\n- Ven Pongal - Rs. 55\n- Kari Dosai - Rs. 90\n\n**Meals (Available: 12:00 PM - 3:30 PM)**\n- Meals (Veg Thali) - Rs. 120\n- Chettinad Chicken Meals - Rs. 220\n\n**Beverages & Desserts**\n- Madurai Jigarthanda - Rs. 70\n- Filter Coffee - Rs. 22\n- Badam Milk - Rs. 50"
+      },
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The assistant includes items (Kari Dosai, Chettinad Chicken Meals, etc.) that are not part of the ground truth menu for Sri Kaveri Bhavan.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "sri_lakshmi_vilas_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The menu at Sri Kaveri Bhavan on Gandhi Road includes:\n\n**Tiffin (Available: 6:30 AM - 11:00 AM & 4:00 PM - 7:00 PM):**\n- Plain Idli (2 pcs) - Rs. 40\n- Masala Dosa - Rs. 70\n- Medu Vada (2 pcs) - Rs. 45\n- Ven Pongal - Rs. 55\n- Kari Dosai - Rs. 90\n\n**Meals (Available: 12:00 PM - 3:30 PM):**\n- Meals (Veg Thali) - Rs. 120\n- Chettinad Chicken Meals - Rs. 220\n\n**Beverages & Desserts:**\n- Madurai Jigarthanda - Rs. 70\n- Filter Coffee - Rs. 22 (or Rs. 24 for the other variation)\n- Paruthi Paal - Rs. 40\n- Badam Milk - Rs. 50"
+      },
+      {
+        "passed": false,
+        "source_check": true,
+        "refusal_check": true,
+        "judge_verdict": "INCORRECT",
+        "judge_reason": "The assistant's answer includes 'Kari Dosai' and 'Madurai Jigarthanda,' which are not part of the reference menu.",
+        "sources": [
+          "sri_kaveri_bhavan_menu.txt",
+          "vaigai_tiffin_center_menu.txt"
+        ],
+        "answer": "The menu at Sri Kaveri Bhavan on Gandhi Road includes:\n\n**Tiffin (Available: 6:30 AM - 11:00 AM & 4:00 PM - 7:00 PM)**:\n- Plain Idli (2 pcs) - Rs. 40\n- Masala Dosa - Rs. 70\n- Medu Vada (2 pcs) - Rs. 45\n- Ven Pongal - Rs. 55\n- Kari Dosai - Rs. 90 (Non-vegetarian)\n\n**Meals (Available: 12:00 PM - 3:30 PM)**:\n- Meals (Veg Thali) - Rs. 120\n- Kaveri Special Thali - Rs. 180\n- Curd Rice - Rs. 60\n\n**Beverages & Desserts**:\n- Madurai Jigarthanda - Rs. 70\n- Filter Coffee - Rs. 22 (or Rs. 25 for a different version)\n- Rava Kesari - Rs. 35\n- Paruthi Paal - Rs. 40"
+      }
+    ]
+  }
+]

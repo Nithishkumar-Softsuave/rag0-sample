@@ -92,7 +92,20 @@ def retrieve(question: str, results: int | None = None, pool: int | None = None)
     )
 
     sources = sorted({metadata_by_id[chunk_id]["source"] for chunk_id in chunk_ids if chunk_id in metadata_by_id})
-    return [text_by_id[chunk_id] for chunk_id in chunk_ids if chunk_id in text_by_id], sources
+
+    # WEEK-6 CHANGE: label each chunk with the source document it came from.
+    # Before, generate_response() saw only raw chunk text with no indication
+    # of which document a passage belonged to -- if a chunk didn't happen to
+    # repeat the restaurant's name in that section, the model had no way to
+    # tell two shops' "Filter Coffee" lines apart. See docs/week6-evals.md
+    # (Group A, near-duplicate entity mix-up) and
+    # docs/week5-error-analysis.md for the failures this targets.
+    labeled_chunks = [
+        f"[Source: {metadata_by_id[chunk_id]['source']}]\n{text_by_id[chunk_id]}"
+        for chunk_id in chunk_ids
+        if chunk_id in text_by_id
+    ]
+    return labeled_chunks, sources
 
 
 def generate_response(question: str, chunks: list[str]) -> str:
@@ -104,9 +117,26 @@ def generate_response(question: str, chunks: list[str]) -> str:
     response = get_client().chat.completions.create(
         model=model,
         messages=[
-            {"role": "system", "content": "Answer using only the supplied context. If it does not contain the answer, say you do not know. Keep the answer concise."},
+            {
+                "role": "system",
+                "content": (
+                    "Answer using only the supplied context. Each passage below is labeled "
+                    "with its source document as [Source: filename]. If the question names a "
+                    "specific entity (a restaurant, shop, or document), use only the passage(s) "
+                    "whose [Source: ...] label matches that entity -- ignore facts from other "
+                    "sources even if they describe a similar-sounding item. If the question asks "
+                    "about multiple entities, or a comparison across all of them, address each "
+                    "source separately by name; never blend facts from different sources into one "
+                    "unattributed number. Refer to each entity by its real name as it appears "
+                    "inside the passage text -- never write the literal '[Source: ...]' tag in "
+                    "your answer, that label is only for you to tell passages apart. If the "
+                    "context does not contain the answer, say you do not know. Keep the answer "
+                    "concise."  # WEEK-6 CHANGE
+                ),
+            },
             {"role": "user", "content": f"Context:\n{context}\n\nQuestion:\n{question}"},
         ],
+        max_tokens=500,  # WEEK-6 CHANGE: answers are asked to stay concise
     )
     record_usage(response.usage, model)  # WEEK-6 CHANGE
     return response.choices[0].message.content or "I could not generate an answer."

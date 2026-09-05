@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading the Circuit — evals.run Execution Trace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:            #0b2545;
+    --bg-deep:       #071a33;
+    --panel:         #0e2c52;
+    --line:          #3f6690;
+    --line-bright:   #9fd0ff;
+    --ink:           #eef4fb;
+    --ink-dim:       #9db4cf;
+    --amber:         #ffb454;
+    --amber-dim:     #caa06a;
+    --good:          #8fd6a8;
+    --bad:           #ff9d85;
+    --font-display:  'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-body:      'IBM Plex Sans', 'Segoe UI', sans-serif;
+    --font-mono:      'IBM Plex Mono', ui-monospace, Consolas, monospace;
+    --radius: 2px;
+    --wrap: 960px;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--font-body); font-size:16px; line-height:1.6;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+
+  .grid-overlay{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(159,208,255,0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(159,208,255,0.055) 1px, transparent 1px);
+    background-size: 34px 34px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 40%, transparent 90%);
+  }
+
+  .marginalia{
+    position:fixed; left:14px; top:50%; transform:translateY(-50%) rotate(180deg);
+    writing-mode:vertical-rl; font-family:var(--font-mono); font-size:11px;
+    letter-spacing:0.28em; color:var(--line); z-index:1; user-select:none;
+  }
+  @media (max-width: 980px){ .marginalia{ display:none; } }
+
+  .sheet-index{
+    position:sticky; top:0; z-index:20; display:flex; align-items:center; gap:0;
+    background:rgba(7,26,51,0.86); backdrop-filter: blur(6px);
+    border-bottom:1px solid var(--line); font-family:var(--font-mono); font-size:12px;
+  }
+  .sheet-index .dwg{ padding:10px 16px; color:var(--amber); letter-spacing:0.12em; white-space:nowrap; border-right:1px solid var(--line); }
+  .sheet-index nav{ display:flex; overflow-x:auto; }
+  .sheet-index a{
+    color:var(--ink-dim); text-decoration:none; padding:10px 16px; white-space:nowrap;
+    letter-spacing:0.08em; border-right:1px solid rgba(63,102,144,0.5);
+    transition:color .15s ease, background .15s ease;
+  }
+  .sheet-index a:hover, .sheet-index a:focus-visible{ color:var(--ink); background:rgba(159,208,255,0.08); }
+  .sheet-index a:focus-visible{ outline:1.5px solid var(--amber); outline-offset:-2px; }
+
+  header.hero{ position:relative; max-width:var(--wrap); margin:0 auto; padding:64px 28px 40px; z-index:2; }
+  .crop{ position:absolute; width:18px; height:18px; opacity:.55; }
+  .crop::before, .crop::after{ content:''; position:absolute; background:var(--line-bright); }
+  .crop::before{ width:100%; height:1px; top:50%; }
+  .crop::after{ height:100%; width:1px; left:50%; }
+  .crop-tl{ top:18px; left:0; }
+  .crop-tr{ top:18px; right:0; }
+
+  .eyebrow{ font-family:var(--font-mono); font-size:12px; letter-spacing:0.22em; color:var(--amber); margin:0 0 18px; animation: boot-in .5s ease-out both; }
+  h1{
+    font-family:var(--font-display); font-weight:600; font-size:clamp(2.1rem, 4.6vw, 3.4rem);
+    line-height:1.08; margin:0 0 20px; letter-spacing:-0.01em; animation: boot-in .55s ease-out .06s both;
+  }
+  h1 span{ color:var(--line-bright); font-family:var(--font-mono); font-weight:500; }
+  .lede{ max-width:58ch; color:var(--ink-dim); font-size:1.05rem; margin:0 0 44px; animation: boot-in .55s ease-out .12s both; }
+  .lede strong{ color:var(--ink); font-weight:600; }
+
+  @keyframes boot-in{ from{ opacity:0; transform:translateY(10px);} to{ opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce){
+    .eyebrow, h1, .lede, .schematic, .titleblock{ animation:none !important; opacity:1 !important; transform:none !important; }
+  }
+
+  .schematic{
+    border:1px solid var(--line); background:linear-gradient(180deg, rgba(159,208,255,0.04), transparent 60%);
+    padding:28px 24px 24px; animation: boot-in .6s ease-out .18s both;
+  }
+  .pipeline-row{ margin-bottom:30px; }
+  .pipeline-row:last-child{ margin-bottom:0; }
+  .pipeline-label{ display:block; font-family:var(--font-mono); font-size:11px; letter-spacing:0.16em; color:var(--ink-dim); margin-bottom:12px; }
+  .pipeline-label b{ color:var(--amber); font-weight:600; }
+
+  .nodes{ display:flex; align-items:stretch; gap:0; flex-wrap:wrap; }
+  .node{
+    flex:1 1 auto; min-width:112px; background:var(--bg-deep); border:1px solid var(--line);
+    color:var(--ink); font-family:var(--font-mono); font-size:12px; padding:12px 10px; text-align:center;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; border-radius:var(--radius);
+  }
+  .node.node-store{ border-color:var(--amber-dim); box-shadow:0 0 0 1px rgba(255,180,84,0.15) inset; }
+  .node.node-loop{ border-style:dashed; border-color:var(--line-bright); }
+  .node small{ color:var(--ink-dim); font-size:10px; letter-spacing:0.02em; }
+
+  .wire{
+    flex:0 0 30px; align-self:center; height:2px; position:relative;
+    background:repeating-linear-gradient(90deg, var(--line-bright) 0 6px, transparent 6px 12px);
+    background-size:24px 2px; animation: flow 1.1s linear infinite;
+  }
+  .wire::after{
+    content:''; position:absolute; right:-1px; top:50%; transform:translateY(-50%);
+    border-style:solid; border-width:4px 0 4px 6px; border-color:transparent transparent transparent var(--line-bright);
+  }
+  @keyframes flow{ to{ background-position:-24px 0; } }
+  @media (prefers-reduced-motion: reduce){ .wire{ animation:none; } }
+
+  @media (max-width: 720px){
+    .nodes{ flex-direction:column; }
+    .wire{ flex:0 0 20px; width:2px; height:20px; align-self:center;
+      background:repeating-linear-gradient(180deg, var(--line-bright) 0 6px, transparent 6px 12px);
+      background-size:2px 24px; animation:flowV 1.1s linear infinite; }
+    .wire::after{ right:50%; top:-1px; transform:translate(50%,0) rotate(90deg); }
+    @keyframes flowV{ to{ background-position:0 -24px; } }
+  }
+
+  .titleblock{
+    margin-top:26px; display:flex; flex-wrap:wrap; border:1px solid var(--line);
+    font-family:var(--font-mono); font-size:11px; animation: boot-in .6s ease-out .24s both;
+  }
+  .titleblock div{ padding:8px 14px; border-right:1px solid var(--line); flex:1 1 auto; min-width:100px; color:var(--ink); }
+  .titleblock div:last-child{ border-right:none; }
+  .titleblock span{ display:block; color:var(--ink-dim); letter-spacing:0.14em; font-size:9.5px; margin-bottom:3px; }
+
+  main{ max-width:var(--wrap); margin:0 auto; padding:0 28px; position:relative; z-index:2; }
+  .section{ padding:56px 0; border-top:1px solid rgba(63,102,144,0.5); }
+  .section:first-child{ border-top:none; }
+  .section > .kicker{ font-family:var(--font-mono); font-size:11px; letter-spacing:0.2em; color:var(--amber); margin:0 0 10px; }
+  h2{ font-family:var(--font-display); font-weight:600; font-size:clamp(1.5rem, 2.6vw, 2rem); margin:0 0 18px; letter-spacing:-0.01em; }
+  h2 code, h3 code{ font-family:var(--font-mono); font-weight:500; color:var(--line-bright); background:none; }
+  h3{ font-family:var(--font-display); font-size:1.05rem; font-weight:600; margin:0 0 8px; color:var(--ink); }
+  p{ color:var(--ink-dim); margin:0 0 16px; max-width:70ch; }
+  p strong{ color:var(--ink); font-weight:600; }
+  .prose p:last-child{ margin-bottom:0; }
+
+  code.inline{ font-family:var(--font-mono); font-size:0.9em; color:var(--amber); background:rgba(255,180,84,0.08); padding:0.1em 0.4em; border-radius:var(--radius); }
+
+  .code{
+    font-family:var(--font-mono); font-size:0.84rem; line-height:1.65; background:var(--bg-deep);
+    border-left:3px solid var(--amber); padding:14px 16px; overflow-x:auto; margin:16px 0;
+    border-radius:var(--radius); color:var(--ink); white-space:pre;
+  }
+  .code .fn{ color:var(--amber); }
+  .code .kw{ color:var(--line-bright); }
+  .code .cm{ color:var(--ink-dim); font-style:italic; }
+  .code .str{ color:var(--good); }
+
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; margin:0 0 20px; }
+  .chip{ font-family:var(--font-mono); font-size:12px; color:var(--ink); border:1px solid var(--line); padding:6px 10px; border-radius:var(--radius); background:var(--panel); }
+  .chip b{ color:var(--amber); font-weight:600; }
+
+  .trace-rail{ position:relative; padding-left:0; }
+  .trace-rail::before{
+    content:''; position:absolute; left:27px; top:8px; bottom:8px; width:2px;
+    background:repeating-linear-gradient(180deg, var(--line) 0 8px, transparent 8px 16px);
+  }
+  .station{ display:grid; grid-template-columns:56px 1fr; column-gap:20px; position:relative; padding-bottom:44px; }
+  .station:last-child{ padding-bottom:0; }
+  .station-num{
+    width:44px; height:44px; border:2px solid var(--amber); background:var(--bg-deep); color:var(--amber);
+    font-family:var(--font-mono); font-weight:600; font-size:14px; display:flex; align-items:center;
+    justify-content:center; border-radius:3px; position:relative; z-index:1; justify-self:start;
+  }
+  .station-num.branch{ border-color:var(--line-bright); color:var(--line-bright); border-style:dashed; }
+  .station-body{ padding-top:4px; }
+  .station h3{ font-size:1.15rem; }
+  .station .role{ font-family:var(--font-mono); font-size:11.5px; color:var(--line-bright); letter-spacing:0.04em; margin-bottom:10px; display:block; }
+
+  .fork{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:14px; }
+  @media (max-width:680px){ .fork{ grid-template-columns:1fr; } }
+  .fork > div{ border:1px solid var(--line); padding:14px 16px; border-radius:var(--radius); background:var(--panel); }
+  .fork h4{ margin:0 0 8px; font-family:var(--font-mono); font-size:12px; letter-spacing:0.08em; color:var(--amber); font-weight:600; }
+  .fork p{ margin:0; font-size:0.92rem; }
+  .fork.verdict > div.no{ border-left:3px solid var(--bad); }
+  .fork.verdict > div.yes{ border-left:3px solid var(--good); }
+
+  .trial-vis{ display:flex; gap:8px; margin:16px 0 4px; flex-wrap:wrap; }
+  .trial-card{
+    flex:1 1 120px; border:1px solid var(--line); border-radius:var(--radius); background:var(--bg-deep);
+    padding:10px 12px; font-family:var(--font-mono); font-size:11.5px;
+  }
+  .trial-card .t-head{ color:var(--ink-dim); letter-spacing:0.08em; font-size:10px; margin-bottom:6px; text-transform:uppercase; }
+  .trial-card .t-verdict{ font-weight:600; }
+  .trial-card.pass .t-verdict{ color:var(--good); }
+  .trial-card.fail .t-verdict{ color:var(--bad); }
+  .trial-vote{
+    flex:1 1 140px; border:1px solid var(--amber); border-radius:var(--radius); background:var(--panel);
+    padding:10px 12px; font-family:var(--font-mono); font-size:11.5px; display:flex; flex-direction:column; justify-content:center;
+  }
+  .trial-vote .t-head{ color:var(--amber); letter-spacing:0.08em; font-size:10px; margin-bottom:6px; text-transform:uppercase; }
+
+  table.scoretable{ width:100%; border-collapse:collapse; font-size:0.88rem; margin:8px 0 4px; }
+  table.scoretable th, table.scoretable td{ text-align:left; padding:9px 12px; border-bottom:1px solid rgba(63,102,144,0.5); }
+  table.scoretable thead th{ font-family:var(--font-mono); font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--ink-dim); background:var(--bg-deep); }
+  table.scoretable td.mono{ font-family:var(--font-mono); font-size:0.82rem; color:var(--line-bright); }
+
+  .note{ border:1px solid var(--line); border-left:3px solid var(--amber); background:var(--panel); border-radius:var(--radius); padding:14px 16px; margin:18px 0; font-size:0.92rem; }
+  .note p{ margin:0; }
+  .note strong{ color:var(--amber); }
+
+  .colophon{ max-width:var(--wrap); margin:0 auto; padding:52px 28px 80px; position:relative; z-index:2; border-top:1px solid rgba(63,102,144,0.5); }
+  .run-cols{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:20px 0 36px; }
+  @media (max-width:680px){ .run-cols{ grid-template-columns:1fr; } }
+  .run-cols h4{ font-family:var(--font-mono); font-size:11px; letter-spacing:0.14em; color:var(--ink-dim); margin:0 0 8px; text-transform:uppercase; }
+
+  .tagline{ font-family:var(--font-mono); font-size:12px; color:var(--line-bright); border-top:1px solid rgba(63,102,144,0.5); padding-top:20px; margin-top:20px; letter-spacing:0.02em; }
+  .tagline b{ color:var(--amber); }
+
+  a{ color:var(--line-bright); }
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--amber); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<div class="grid-overlay" aria-hidden="true"></div>
+<aside class="marginalia" aria-hidden="true">EVALS PIPELINE · RUN.PY · SHEET 1 OF 1</aside>
+
+<div class="sheet-index">
+  <span class="dwg">DWG RAG&ndash;006</span>
+  <nav aria-label="Section index">
+    <a href="#before">01 &middot; Before the loop</a>
+    <a href="#trace">02 &middot; The trace</a>
+    <a href="#compare">03 &middot; Compare mode</a>
+    <a href="#run">04 &middot; Run it</a>
+  </nav>
+</div>
+
+<header class="hero">
+  <span class="crop crop-tl" aria-hidden="true"></span>
+  <span class="crop crop-tr" aria-hidden="true"></span>
+
+  <p class="eyebrow">SYSTEM TRACE &middot; WEEK 6 &middot; EVALS</p>
+  <h1>Reading the circuit:<br><span>evals.run</span>, start to finish</h1>
+  <p class="lede">One command, <code class="inline">python -m evals.run --repeat 3</code>, runs all 25 questions from <code class="inline">evals/testset.py</code> through the real retrieval + generation pipeline, scores each one with a free rule check and an LLM judge, and prints a score overall and per named failure group. <strong>This sheet traces the exact path execution takes</strong>, from the first argument parsed to the results file written to disk.</p>
+
+  <div class="schematic" role="img" aria-label="Diagram of two nested loops: an outer loop over 25 test cases, and an inner loop of 1 to N repeated trials per case, feeding a majority vote.">
+    <div class="pipeline-row">
+      <span class="pipeline-label"><b>OUTER LOOP</b> &mdash; once per test case, &times;25</span>
+      <div class="nodes">
+        <div class="node">TEST_CASES[i]</div>
+        <div class="wire" aria-hidden="true"></div>
+        <div class="node node-loop">run_case()<small>repeat=N trials</small></div>
+        <div class="wire" aria-hidden="true"></div>
+        <div class="node">majority vote<small>pass_rate &ge; 50%</small></div>
+        <div class="wire" aria-hidden="true"></div>
+        <div class="node node-store">CaseResult</div>
+      </div>
+    </div>
+    <div class="pipeline-row">
+      <span class="pipeline-label"><b>INNER LOOP</b> &mdash; one live trial, runs N times per case</span>
+      <div class="nodes">
+        <div class="node">retrieve()<small>hybrid + rerank</small></div>
+        <div class="wire" aria-hidden="true"></div>
+        <div class="node">generate_response()<small>source-labeled ctx</small></div>
+        <div class="wire" aria-hidden="true"></div>
+        <div class="node">rule checks<small>sources, refusal</small></div>
+        <div class="wire" aria-hidden="true"></div>
+        <div class="node node-store">judge_answer()<small>skipped if refusal</small></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="titleblock">
+    <div><span>DRAWING</span>evals/run.py</div>
+    <div><span>SHEET</span>1 of 1</div>
+    <div><span>CASES</span>25</div>
+    <div><span>DATE</span>2026&ndash;09&ndash;05</div>
+    <div><span>REV</span>A</div>
+  </div>
+</header>
+
+<main>
+
+  <section class="section prose" id="before">
+    <p class="kicker">01 &middot; BEFORE THE LOOP</p>
+    <h2>What runs before question 1</h2>
+    <p><code class="inline">python -m evals.run --repeat 3</code> starts in <code class="inline">main()</code>. Before any question is asked, two things happen in order.</p>
+
+    <div class="chips">
+      <div class="chip"><b>argparse</b> &mdash; reads --label, --repeat, --compare</div>
+      <div class="chip"><b>index_directory()</b> &mdash; same indexer app.py and the CLI use</div>
+    </div>
+
+    <div class="code"><span class="kw">if</span> args.compare:
+    compare(*args.compare)   <span class="cm"># diffs two saved runs, never calls the model</span>
+    <span class="kw">return</span>
+
+indexed = index_directory(get_settings().articles_dir)
+<span class="kw">if</span> indexed:
+    <span class="fn">print</span>(f<span class="str">"Checked {len(indexed)} document(s); only new content was embedded."</span>)</div>
+
+    <p><strong>The index step is idempotent, not a fresh rebuild.</strong> <code class="inline">index_directory()</code> re-reads all 5 menu files every run, but <code class="inline">index_text()</code> (from Week 1&ndash;3's <code class="inline">rag_chat/ingestion.py</code>) hashes each chunk's content into its Chroma id and skips any id already stored &mdash; so re-running the eval suite back to back costs one cheap existence check per chunk, not 5 documents' worth of re-embedding.</p>
+  </section>
+
+  <section class="section" id="trace">
+    <p class="kicker">02 &middot; EXECUTION ORDER</p>
+    <h2>The trace &mdash; what happens for each of the 25 questions</h2>
+    <p class="prose" style="max-width:70ch; color:var(--ink-dim); margin-bottom:36px;">Six stations per test case, always in this order, printed as <code class="inline">[n/25] &lt;question&gt;</code> as it goes. With <code class="inline">--repeat 3</code>, stations 03&ndash;04 run three full times per case before station 05 ever sees a result.</p>
+
+    <div class="trace-rail">
+
+      <div class="station">
+        <div class="station-num">01</div>
+        <div class="station-body">
+          <span class="role">main() &rarr; for case in TEST_CASES</span>
+          <h3>One test case at a time, in file order</h3>
+          <p><code class="inline">evals/testset.py</code> holds 25 <code class="inline">TestCase</code> entries &mdash; the same 25 questions from Week 5's error analysis. Each one carries the question text, which documents it should retrieve, a reference <code class="inline">ground_truth</code>, whether it should refuse, and &mdash; for the 8 that failed last week &mdash; which named failure group (A&ndash;E) it belongs to.</p>
+        </div>
+      </div>
+
+      <div class="station">
+        <div class="station-num">02</div>
+        <div class="station-body">
+          <span class="role">run_case(case, repeat=N)</span>
+          <h3>Run the same question N times, independently</h3>
+          <p>Chat-model answers vary run to run &mdash; a single pass can make a fix look better or worse than it really is by luck. So <code class="inline">run_case()</code> calls <code class="inline">run_one_trial(case)</code> <code class="inline">repeat</code> times (each one a full, independent live call &mdash; nothing is cached between trials), then scores the case by majority vote.</p>
+          <div class="code"><span class="kw">def</span> <span class="fn">run_case</span>(case, repeat=<span class="str">1</span>):
+    trials = [run_one_trial(case) <span class="kw">for</span> _ <span class="kw">in</span> <span class="fn">range</span>(repeat)]
+    pass_rate = <span class="fn">sum</span>(<span class="str">1</span> <span class="kw">for</span> t <span class="kw">in</span> trials <span class="kw">if</span> t[<span class="str">"passed"</span>]) / <span class="fn">len</span>(trials)
+    majority = pass_rate &gt;= <span class="str">0.5</span></div>
+        </div>
+      </div>
+
+      <div class="station">
+        <div class="station-num">03</div>
+        <div class="station-body">
+          <span class="role">run_one_trial() &rarr; retrieve(question)</span>
+          <h3>Find the chunks, then label them by source</h3>
+          <p>This is the full Week 3&ndash;5 retrieval stack, unchanged: hybrid search (semantic + BM25) fused with reciprocal rank fusion, then a wider candidate window judged by an LLM reranker (Week 4) against the exact question. What's new this week is the last step &mdash; each surviving chunk is now returned prefixed with <code class="inline">[Source: filename]</code>, instead of raw unlabeled text.</p>
+          <div class="code">labeled_chunks = [
+    f<span class="str">"[Source: {metadata_by_id[cid]['source']}]\n{text_by_id[cid]}"</span>
+    <span class="kw">for</span> cid <span class="kw">in</span> chunk_ids <span class="kw">if</span> cid <span class="kw">in</span> text_by_id
+]
+<span class="kw">return</span> labeled_chunks, sources</div>
+          <p>Without this label, a chunk from deep in a menu file (past the point where the restaurant's name is stated) gave the model no way to tell two shops' "Filter Coffee" lines apart &mdash; the root cause behind Week 5's biggest failure group.</p>
+        </div>
+      </div>
+
+      <div class="station">
+        <div class="station-num">04</div>
+        <div class="station-body">
+          <span class="role">run_one_trial() &rarr; generate_response(question, chunks)</span>
+          <h3>Answer, told explicitly which passage is whose</h3>
+          <p>The labeled chunks are joined into one context block. The system prompt sent alongside it (Week 6's one change) tells the model to match the question's named entity to a <code class="inline">[Source: ...]</code> label, answer only from the matching passage(s), address multiple entities separately instead of blending them, and never echo the raw label back in its answer.</p>
+        </div>
+      </div>
+
+      <div class="station">
+        <div class="station-num">05</div>
+        <div class="station-body">
+          <span class="role">run_one_trial() &rarr; score the answer</span>
+          <h3>Free checks first, then the judge &mdash; but only sometimes</h3>
+          <p><code class="inline">check_sources()</code> and <code class="inline">check_refusal_behavior()</code> run first (<code class="inline">evals/checks.py</code>, no API call). What happens next branches on one field of the test case:</p>
+          <div class="fork verdict">
+            <div class="yes">
+              <h4>should_refuse = True</h4>
+              <p>The rule check already answers the only question that matters &mdash; did it refuse? Grading a refusal against a reference sentence adds nothing, so <code class="inline">judge_answer()</code> is skipped entirely. <code class="inline">passed = source_check and refusal_check</code>.</p>
+            </div>
+            <div class="no">
+              <h4>should_refuse = False</h4>
+              <p><code class="inline">judge_answer()</code> is called: one more LLM call, grading the answer against <code class="inline">ground_truth</code> with a binary <code class="inline">CORRECT</code>/<code class="inline">INCORRECT</code> verdict. An unparsable judge reply fails closed to <code class="inline">INCORRECT</code>, never silently skipped. <code class="inline">passed</code> requires all three checks to agree.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="station">
+        <div class="station-num">06</div>
+        <div class="station-body">
+          <span class="role">run_case() &rarr; back from the inner loop</span>
+          <h3>Vote, then keep one representative trial</h3>
+          <p>Once all <code class="inline">repeat</code> trials are in, <code class="inline">run_case()</code> takes the majority verdict and keeps one matching trial's full detail (sources, answer text, judge reason) to report &mdash; plus the raw <code class="inline">pass_rate</code>, so a 2-of-3 split is visible instead of hidden behind a single true/false.</p>
+          <div class="trial-vis">
+            <div class="trial-card fail"><div class="t-head">Trial 1</div><div class="t-verdict">FAIL</div></div>
+            <div class="trial-card fail"><div class="t-head">Trial 2</div><div class="t-verdict">FAIL</div></div>
+            <div class="trial-card pass"><div class="t-head">Trial 3</div><div class="t-verdict">PASS</div></div>
+            <div class="trial-vote"><div class="t-head">Case result</div><div>pass_rate = 33%<br>passed = <span style="color:var(--bad);">False</span></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="note" style="margin-top:44px;">
+      <p><strong>After all 25 cases:</strong> <code class="inline">print_report(results)</code> prints an overall score, a per-group table (A&ndash;E plus "previously passing"), and full detail for every case that failed &mdash; then <code class="inline">save_results()</code> writes the whole list to <code class="inline">evals/results/&lt;label&gt;.json</code> via <code class="inline">dataclasses.asdict()</code>, ready to be diffed later.</p>
+    </div>
+  </section>
+
+  <section class="section" id="compare">
+    <p class="kicker">03 &middot; THE OTHER PATH</p>
+    <h2><code>--compare</code> takes a completely different branch</h2>
+    <p>Back at station 01: if <code class="inline">--compare before after</code> is passed, none of the stations above ever run. <code class="inline">compare()</code> loads two previously-saved <code class="inline">evals/results/*.json</code> files, recomputes each group's pass count from the stored data, and prints a table plus two id lists &mdash; no retrieval, no generation, no judge, no cost.</p>
+    <table class="scoretable">
+      <thead><tr><th>Group</th><th>before</th><th>after</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">A &ndash; Near-duplicate entity mix-up</td><td>0/4</td><td>1/4</td></tr>
+        <tr><td class="mono">B &ndash; Cross-document menu bleeding</td><td>0/1</td><td>1/1</td></tr>
+        <tr><td class="mono">none &ndash; previously passing</td><td>16/17</td><td>15/17</td></tr>
+      </tbody>
+    </table>
+    <p>Then <code class="inline">Fixed: [...]</code> and <code class="inline">Regressed: [...]</code> &mdash; any case id whose <code class="inline">passed</code> flag flipped between the two files, in either direction. See <code class="inline">docs/week6-evals.md</code> for the full reading of these numbers.</p>
+  </section>
+
+</main>
+
+<footer class="colophon" id="run">
+  <p class="kicker">04 &middot; OPERATION</p>
+  <h2>Run it</h2>
+  <div class="run-cols">
+    <div>
+      <h4>Score the current code</h4>
+      <div class="code">python -m evals.run --repeat 3
+<span class="cm"># each case run 3x, majority vote</span>
+
+python -m evals.run --label before
+<span class="cm"># single pass, saved under a name</span></div>
+    </div>
+    <div>
+      <h4>Compare two saved runs</h4>
+      <div class="code">python -m evals.run --compare before after
+<span class="cm"># reads saved JSON only, no API calls</span>
+
+python -m evals.validate_judge
+<span class="cm"># judge vs. Week 5's human grading</span></div>
+    </div>
+  </div>
+
+  <p class="tagline">No mocking, no cached fixtures &mdash; every trial is a real call through <b>retrieve()</b> and <b>generate_response()</b>, which is exactly why <code class="inline">--repeat</code> exists. <code class="inline">rag0-sample/evals/run.py</code></p>
+</footer>
+
+</body>
+</html>

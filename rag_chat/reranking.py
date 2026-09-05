@@ -73,6 +73,7 @@ def rerank(question: str, chunk_ids: list[str], chunk_texts: list[str], top_n: i
             {"role": "system", "content": RERANK_SYSTEM_PROMPT},
             {"role": "user", "content": build_rerank_prompt(question, chunk_texts)},
         ],
+        max_tokens=200,  # WEEK-6 CHANGE: a rank order like [3, 1, 2] never needs more
     )
     record_usage(response.usage, model)  # WEEK-6 CHANGE
     order = parse_rank_order(response.choices[0].message.content or "", len(chunk_ids))
