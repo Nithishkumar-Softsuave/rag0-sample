@@ -14,7 +14,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 
-from rag_chat.client import get_client, record_usage
+from rag_chat.client import create_chat_completion, record_usage, resolve_max_tokens
 from rag_chat.config import get_settings
 
 JUDGE_SYSTEM_PROMPT = (
@@ -68,13 +68,13 @@ def parse_verdict(raw_response: str) -> JudgeResult:
 def judge_answer(question: str, ground_truth: str, answer: str) -> JudgeResult:
     """Ask the judge model to grade one answer against its ground truth."""
     model = get_settings().chat_model
-    response = get_client().chat.completions.create(
+    response = create_chat_completion(
         model=model,
         messages=[
             {"role": "system", "content": JUDGE_SYSTEM_PROMPT},
             {"role": "user", "content": build_judge_prompt(question, ground_truth, answer)},
         ],
-        max_tokens=200,  # a {"verdict": ..., "reason": "<one short sentence>"} object is tiny
+        max_tokens=resolve_max_tokens(200),  # a {"verdict": ..., "reason": "<one short sentence>"} object is tiny
     )
     record_usage(response.usage, model)
     return parse_verdict(response.choices[0].message.content or "")

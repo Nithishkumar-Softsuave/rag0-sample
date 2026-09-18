@@ -8,14 +8,18 @@ docs/week5-traces.json, which docs/week5-error-analysis.md is written from.
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
+# Add project root to sys.path so we can import rag_chat when running
+# this script directly from the scripts/ directory.
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_ROOT))
 
 from rag_chat.config import get_settings
 from rag_chat.ingestion import index_directory
 from rag_chat.retrieval import generate_response, retrieve
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_PATH = PROJECT_ROOT / "docs" / "week5-traces.json"
 
 # 13 questions carried over from Week 4 (docs/week4-wrong-query-findings.md)

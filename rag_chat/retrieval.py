@@ -5,7 +5,7 @@ import math
 import re
 from collections import Counter
 
-from rag_chat.client import get_client, get_embeddings, record_usage
+from rag_chat.client import create_chat_completion, get_embeddings, record_usage, resolve_max_tokens
 from rag_chat.config import get_settings
 from rag_chat.reranking import rerank  # WEEK-4 CHANGE
 from rag_chat.store import get_collection
@@ -114,7 +114,7 @@ def generate_response(question: str, chunks: list[str]) -> str:
         return "I could not find any relevant information in the indexed documents."
     context = "\n\n".join(chunks)
     model = get_settings().chat_model
-    response = get_client().chat.completions.create(
+    response = create_chat_completion(
         model=model,
         messages=[
             {
@@ -136,7 +136,7 @@ def generate_response(question: str, chunks: list[str]) -> str:
             },
             {"role": "user", "content": f"Context:\n{context}\n\nQuestion:\n{question}"},
         ],
-        max_tokens=500,  # WEEK-6 CHANGE: answers are asked to stay concise
+        max_tokens=resolve_max_tokens(500),  # WEEK-6 CHANGE: answers are asked to stay concise
     )
     record_usage(response.usage, model)  # WEEK-6 CHANGE
     return response.choices[0].message.content or "I could not generate an answer."
