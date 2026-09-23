@@ -15,6 +15,8 @@ from functools import lru_cache
 
 from rag_chat.config import get_settings
 
+_SERVING_SIZE_NOTE = re.compile(r"\s*\(\d+\s*pcs?\)$", re.IGNORECASE)
+
 SHOP_LINE = re.compile(r"^(?P<shop>.+?)\s*-\s*.+Menu\s*$", re.MULTILINE)
 CURRENCY_LINE = re.compile(r"Currency:.*\(([A-Z]{3})\)")
 ITEM_LINE = re.compile(r"^\*\s*(?P<item>.+?)\s*\|\s*Price:\s*(?:Rs\.?\s*|\$)?(?P<amount>[\d.]+)", re.MULTILINE)
@@ -77,6 +79,46 @@ def search_menus(item: str) -> list[dict]:
     ]
 
 
+def core_item_name(item: str) -> str:
+    """Strip a trailing serving-size note, e.g. "Medu Vada (2 pcs)" -> "Medu Vada".
+
+    Deliberately narrow: only a "(<number> pcs)" pattern is stripped, not any
+    parenthetical. An earlier, broader version stripped "Meals (Veg Thali)"
+    down to the bare word "Meals" -- which then falsely matched inside
+    "Chettinad Chicken Meals" and any other item ending in "Meals". A
+    parenthetical is usually a meaningful qualifier (which thali, which tea
+    variant); only the serving-size count is genuinely safe to drop.
+    """
+    return _SERVING_SIZE_NOTE.sub("", item).strip()
+
+
+def search_menus_for_agent(item: str) -> dict:
+    """search_menus(), plus a warning when the matches are different dishes.
+
+    Week 8 fix for the outcome-vs-trajectory gap in
+    docs/week8-agent-failures.md: substring matching makes "Thali" return
+    "Kaveri Special Thali" *and* "Meals (Veg Thali)" -- different products --
+    and the agent used to compare them as one item and name a "cheapest".
+    The tool now says so explicitly, instead of relying on the model to
+    notice. The plain search_menus() is unchanged, so the fixed workflow and
+    its tests are unaffected.
+    """
+    matches = search_menus(item)
+    result: dict = {"matches": matches}
+    if not matches:
+        result["note"] = f"No menu item matches '{item}'. Tell the user it was not found; do not guess a price."
+        return result
+    distinct = sorted({core_item_name(match["item"]) for match in matches})
+    if len(distinct) > 1:
+        result["warning"] = (
+            f"'{item}' matched {len(distinct)} DIFFERENT dishes: {distinct}. These are not the "
+            "same item. Do not name one of them the 'cheapest <item>' as if they were comparable -- "
+            "list each dish separately by its full name, and only compare prices between records "
+            "with the same dish name."
+        )
+    return result
+
+
 def convert_currency(amount: float, from_currency: str, to_currency: str) -> dict:
     """Convert `amount` between currencies using the fixed rate table above."""
     from_currency, to_currency = from_currency.upper(), to_currency.upper()
@@ -95,7 +137,8 @@ TOOL_SCHEMAS = [
             "name": "search_menus",
             "description": (
                 "Search every restaurant's menu for a food or drink item by name. "
-                "Returns every shop that sells a matching item, with its price and currency."
+                "Returns {matches: [{shop, item, price, currency}]}, plus a `warning` when the "
+                "matches are different dishes, or a `note` when nothing matched."
             ),
             "parameters": {
                 "type": "object",
@@ -125,6 +168,6 @@ TOOL_SCHEMAS = [
 ]
 
 TOOL_FUNCTIONS = {
-    "search_menus": lambda args: search_menus(args["item"]),
+    "search_menus": lambda args: search_menus_for_agent(args["item"]),
     "convert_currency": lambda args: convert_currency(args["amount"], args["from_currency"], args["to_currency"]),
 }

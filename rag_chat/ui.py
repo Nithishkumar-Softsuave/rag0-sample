@@ -189,8 +189,15 @@ def render_agent_tab() -> None:
                 if step.tool is None:
                     continue
                 st.markdown(f"`step {step_number}` &rarr; **{step.tool}**`({step.args})`")
+                if step.blocked:  # WEEK-8 CHANGE: a guard refused this call; the tool never ran
+                    st.warning(f"Blocked by a safety check: {step.blocked}")
+                    continue
                 st.code(json.dumps(step.result, indent=2), language="json")
             st.write(agent_result.answer)
+            if agent_result.validation_retries:  # WEEK-8 CHANGE
+                st.info("The first draft failed an automated answer check and was rewritten.")
+            if agent_result.validation_issues:  # WEEK-8 CHANGE
+                st.error("Answer withheld -- it failed verification: " + "; ".join(agent_result.validation_issues))
             st.caption(
                 f"{agent_result.tool_calls} tool call(s), {agent_result.elapsed_seconds:.2f}s, "
                 f"est. ${agent_result.cost_usd:.5f} -- stopped: {agent_result.stopped_reason}"

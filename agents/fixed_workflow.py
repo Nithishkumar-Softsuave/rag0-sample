@@ -8,27 +8,10 @@ menu item closely enough, and unable to answer at all when it doesn't
 """
 from __future__ import annotations
 
-import re
 import time
 from dataclasses import dataclass, field
 
-from agents.tools import convert_currency, load_catalog, search_menus
-
-_SERVING_SIZE_NOTE = re.compile(r"\s*\(\d+\s*pcs?\)$", re.IGNORECASE)
-
-
-def _core_name(item: str) -> str:
-    """Strip a trailing serving-size note, e.g. "Medu Vada (2 pcs)" -> "Medu Vada".
-
-    Deliberately narrow: only a "(<number> pcs)" pattern is stripped, not any
-    parenthetical. An earlier, broader version stripped "Meals (Veg Thali)"
-    down to the bare word "Meals" -- which then falsely matched inside
-    "Chettinad Chicken Meals" and any other item ending in "Meals". A
-    parenthetical here is usually a meaningful qualifier (which thali, which
-    tea variant), not noise; only the serving-size count is genuinely safe
-    to drop. See docs/week7-agents.md.
-    """
-    return _SERVING_SIZE_NOTE.sub("", item).strip()
+from agents.tools import convert_currency, core_item_name, load_catalog, search_menus
 
 
 @dataclass
@@ -46,7 +29,7 @@ def _known_items() -> list[str]:
     (hypothetical) shorter item name that happens to be its substring,
     so the more specific match wins.
     """
-    return sorted({_core_name(record.item) for record in load_catalog()}, key=len, reverse=True)
+    return sorted({core_item_name(record.item) for record in load_catalog()}, key=len, reverse=True)
 
 
 def extract_items(question: str) -> list[str]:

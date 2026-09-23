@@ -18,12 +18,13 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 from agents.agent import run_agent
 from agents.fixed_workflow import run_fixed_workflow
 from agents.testset import RACE_CASES, RaceCase
+from agents.trajectory import check_trajectory
 from evals.judge import judge_answer
 
 RESULTS_PATH = Path(__file__).resolve().parent / "results" / "race.json"
@@ -47,17 +48,30 @@ class RaceRow:
     fixed_seconds: float
     fixed_cost_usd: float
     trials: int
+    # Trajectory eval (Week 8): did every trial call the tools this question
+    # actually needs, not just land on a correct-looking answer?
+    trajectory_ok: bool = True
+    trajectory_notes: list[str] = field(default_factory=list)
+    agent_steps: list[list[dict]] = field(default_factory=list)  # one step list per trial
 
 
 def run_case(case: RaceCase, repeat: int = 1) -> RaceRow:
     agent_passes: list[bool] = []
     fixed_passes: list[bool] = []
+    trajectory_oks: list[bool] = []
+    trajectory_notes: list[str] = []
+    agent_steps: list[list[dict]] = []
     agent_result = fixed_result = None
 
     for _ in range(repeat):
         agent_result = run_agent(case.question)
         agent_judged = judge_answer(case.question, case.ground_truth, agent_result.answer)
         agent_passes.append(agent_judged.verdict == "CORRECT")
+
+        verdict = check_trajectory(agent_result.steps, list(case.expected_tools))
+        trajectory_oks.append(verdict.ok)
+        trajectory_notes.append(verdict.note)
+        agent_steps.append([asdict(step) for step in agent_result.steps])
 
         fixed_result = run_fixed_workflow(case.question)
         fixed_judged = judge_answer(case.question, case.ground_truth, fixed_result.answer)
@@ -78,6 +92,9 @@ def run_case(case: RaceCase, repeat: int = 1) -> RaceRow:
         fixed_pass_rate=fixed_pass_rate,
         fixed_seconds=fixed_result.elapsed_seconds, fixed_cost_usd=fixed_result.cost_usd,
         trials=repeat,
+        trajectory_ok=all(trajectory_oks),
+        trajectory_notes=trajectory_notes,
+        agent_steps=agent_steps,
     )
 
 
@@ -90,6 +107,8 @@ def print_report(rows: list[RaceRow]) -> None:
         if row.agent_correct != "CORRECT" or row.fixed_correct != "CORRECT":
             print(f"      agent : {row.agent_answer!r}")
             print(f"      fixed : {row.fixed_answer!r}")
+        if row.agent_correct == "CORRECT" and not row.trajectory_ok:
+            print(f"      ** OUTCOME-VS-TRAJECTORY GAP -- right answer, wrong path: {row.trajectory_notes}")
 
     agent_correct_n = sum(1 for r in rows if r.agent_correct == "CORRECT")
     fixed_correct_n = sum(1 for r in rows if r.fixed_correct == "CORRECT")
