@@ -6,6 +6,7 @@ requires-python = ">=3.11"
 dependencies = [
   "chromadb",
   "langsmith",
+  "mcp>=2.2",
   "openai",
   "pypdf",
   "python-docx",

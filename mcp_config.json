@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "menu": {
+      "command": "${PYTHON}",
+      "args": ["-m", "mcp_servers.menu_server"],
+      "cwd": "${PROJECT_ROOT}",
+      "trusted": true
+    },
+    "ingredients": {
+      "command": "${PYTHON}",
+      "args": ["-m", "mcp_servers.ingredient_server"],
+      "cwd": "${PROJECT_ROOT}",
+      "allowedTools": {
+        "lookup_ingredients": "sha256:642d6a511ebeb820",
+        "find_dishes": "sha256:15a01d463af772e8"
+      }
+    }
+  }
+}
