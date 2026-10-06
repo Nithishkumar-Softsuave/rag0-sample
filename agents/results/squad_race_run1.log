@@ -1,0 +1,122 @@
+Racing ['single', 'squad'] on 12 question(s), 3 trial(s) each.
+  #1 single            trial 1: checks=PASS judge=CORRECT     1.7s   2160 tok $0.00039
+  #1 squad             trial 1: checks=PASS judge=CORRECT     3.9s   2516 tok $0.00062
+  #1 squad             trial 2: checks=PASS judge=CORRECT     8.3s   2249 tok $0.00049
+  #1 single            trial 2: checks=PASS judge=CORRECT     8.4s   2175 tok $0.00040
+  #1 single            trial 3: checks=PASS judge=CORRECT     8.2s   2109 tok $0.00038
+  #1 squad             trial 3: checks=PASS judge=CORRECT    11.4s   2335 tok $0.00052
+  #2 single            trial 1: checks=PASS judge=CORRECT    24.0s   5163 tok $0.00094
+  #2 squad             trial 1: checks=PASS judge=CORRECT    21.2s   5005 tok $0.00109
+  #2 squad             trial 2: checks=PASS judge=CORRECT    27.0s   4881 tok $0.00103
+  #2 single            trial 2: checks=PASS judge=CORRECT    24.4s   5101 tok $0.00093
+  #2 single            trial 3: checks=PASS judge=CORRECT    24.8s   5227 tok $0.00096
+  #2 squad             trial 3: checks=PASS judge=CORRECT    21.8s   5021 tok $0.00109
+  #3 single            trial 1: checks=PASS judge=CORRECT     2.0s   1956 tok $0.00033
+  #3 squad             trial 1: checks=PASS judge=CORRECT     8.0s   2179 tok $0.00047
+  #3 squad             trial 2: checks=PASS judge=CORRECT     7.1s   2162 tok $0.00048
+  #3 single            trial 2: checks=PASS judge=CORRECT     1.3s   2006 tok $0.00035
+  #3 single            trial 3: checks=PASS judge=CORRECT     0.9s   2055 tok $0.00037
+  #3 squad             trial 3: checks=PASS judge=CORRECT     8.5s   2209 tok $0.00048
+  #4 single            trial 1: checks=FAIL judge=CORRECT     3.2s   2085 tok $0.00037
+  #4 squad             trial 1: checks=FAIL judge=CORRECT    12.2s   2466 tok $0.00055
+  #4 squad             trial 2: checks=PASS judge=CORRECT    13.5s   2467 tok $0.00055
+  #4 single            trial 2: checks=FAIL judge=CORRECT     2.1s   2080 tok $0.00037
+  #4 single            trial 3: checks=FAIL judge=CORRECT     5.8s   2201 tok $0.00041
+  #4 squad             trial 3: checks=PASS judge=CORRECT     7.5s   2563 tok $0.00060
+  #5 single            trial 1: checks=FAIL judge=CORRECT     1.4s   2238 tok $0.00042
+  #5 squad             trial 1: checks=FAIL judge=INCORRECT  20.8s   4210 tok $0.00108
+  #5 squad             trial 2: checks=FAIL judge=INCORRECT  21.6s   4522 tok $0.00120 [rate-limited]
+  #5 single            trial 2: checks=FAIL judge=INCORRECT   2.3s   2219 tok $0.00041
+  #5 single            trial 3: checks=FAIL judge=CORRECT     5.6s   2211 tok $0.00040
+  #5 squad             trial 3: checks=FAIL judge=INCORRECT  38.0s   6394 tok $0.00126
+  #6 single            trial 1: checks=PASS judge=CORRECT     8.3s   2157 tok $0.00040
+  #6 squad             trial 1: checks=PASS judge=CORRECT     5.8s   2320 tok $0.00050
+  #6 squad             trial 2: checks=PASS judge=CORRECT     7.0s   2326 tok $0.00051
+  #6 single            trial 2: checks=PASS judge=CORRECT     9.5s   2156 tok $0.00040
+  #6 single            trial 3: checks=PASS judge=CORRECT     2.1s   2071 tok $0.00035
+  #6 squad             trial 3: checks=PASS judge=CORRECT     5.7s   2304 tok $0.00050
+  #7 single            trial 1: checks=PASS judge=CORRECT    15.8s   3814 tok $0.00071
+  #7 squad             trial 1: checks=PASS judge=CORRECT    10.3s   4209 tok $0.00094
+  #7 squad             trial 2: checks=PASS judge=CORRECT    20.9s   4177 tok $0.00096
+  #7 single            trial 2: checks=PASS judge=CORRECT    15.9s   3830 tok $0.00071
+  #7 single            trial 3: checks=PASS judge=CORRECT    12.1s   3893 tok $0.00073
+  #7 squad             trial 3: checks=PASS judge=INCORRECT  19.7s   5240 tok $0.00115 [rate-limited]
+  #8 single            trial 1: checks=PASS judge=CORRECT     9.5s   3943 tok $0.00075
+  #8 squad             trial 1: checks=PASS judge=CORRECT    17.2s   4125 tok $0.00093 [rate-limited]
+  #8 squad             trial 2: checks=PASS judge=CORRECT    26.1s   4576 tok $0.00109 [rate-limited]
+  #8 single            trial 2: checks=PASS judge=CORRECT    14.1s   3804 tok $0.00072
+  #8 single            trial 3: checks=PASS judge=CORRECT    20.2s   4572 tok $0.00097
+  #8 squad             trial 3: checks=PASS judge=CORRECT    17.4s   4730 tok $0.00104
+  #9 single            trial 1: checks=PASS judge=CORRECT     7.8s   3638 tok $0.00066
+  #9 squad             trial 1: checks=PASS judge=INCORRECT  22.4s   5156 tok $0.00114
+  #9 squad             trial 2: checks=PASS judge=INCORRECT  27.5s   5268 tok $0.00120 [rate-limited]
+  #9 single            trial 2: checks=PASS judge=CORRECT    16.3s   4033 tok $0.00081
+  #9 single            trial 3: checks=PASS judge=CORRECT     8.2s   3889 tok $0.00075
+  #9 squad             trial 3: checks=PASS judge=INCORRECT  20.5s   5340 tok $0.00121
+  #10 single            trial 1: checks=FAIL judge=INCORRECT  43.2s   7264 tok $0.00125
+  #10 squad             trial 1: checks=PASS judge=CORRECT    41.2s   8191 tok $0.00176
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\Nithishkumar.k\Desktop\poc\piratemonster_dev\rag0-sample\agents\squad_race.py", line 297, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\Nithishkumar.k\Desktop\poc\piratemonster_dev\rag0-sample\agents\squad_race.py", line 287, in main
+    results = run_race(cases, variants, host, repeat=args.repeat, pause=args.pause,
+                       on_case_done=lambda done: save(done, out))
+  File "C:\Users\Nithishkumar.k\Desktop\poc\piratemonster_dev\rag0-sample\agents\squad_race.py", line 150, in run_race
+    run = measure(variant, case, host)
+  File "C:\Users\Nithishkumar.k\Desktop\poc\piratemonster_dev\rag0-sample\agents\squad_race.py", line 125, in measure
+    answer, tools, stopped, detail = VARIANTS[variant](case.question, host)
+                                     ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nithishkumar.k\Desktop\poc\piratemonster_dev\rag0-sample\agents\squad_race.py", line 99, in _squad
+    result = run_squad(question, host, parallel=parallel)
+  File "C:\Users\Nithishkumar.k\Desktop\poc\piratemonster_dev\rag0-sample\agents\squad.py", line 222, in run_squad
+    result = _run_squad(question, host, specialists, policy, parallel)
+  File "C:\Users\Nithishkumar.k\Desktop\poc\piratemonster_dev\rag0-sample\agents\squad.py", line 262, in _run_squad
+    assignments = [future.result() for future in futures]
+                   ~~~~~~~~~~~~~^^
+  File "C:\Users\Nithishkumar.k\AppData\Roaming\uv\python\cpython-3.14.7-windows-x86_64-none\Lib\concurrent\futures\_base.py", line 454, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Nithishkumar.k\AppData\Roaming\uv\python\cpython-3.14.7-windows-x86_64-none\Lib\concurrent\futures\_base.py", line 396, in __get_result
+    raise self._exception
+  File "C:\Users\Nithishkumar.k\AppData\Roaming\uv\python\cpython-3.14.7-windows-x86_64-none\Lib\concurrent\futures\thread.py", line 86, in run
+    result = ctx.run(self.task)
+  File "C:\Users\Nithishkumar.k\AppData\Roaming\uv\python\cpython-3.14.7-windows-x86_64-none\Lib\concurrent\futures\thread.py", line 73, in run
+    return fn(*args, **kwargs)
+  File "C:\Users\Nithishkumar.k\Desktop\poc\piratemonster_dev\rag0-sample\agents\squad.py", line 251, in work
+    result = run_agent(
+        task, system_prompt=by_name[name].system_prompt,
+        tool_schemas=schemas, tool_functions=functions, policy=policy,
+    )
+  File "C:\Users\Nithishkumar.k\Desktop\poc\piratemonster_dev\rag0-sample\agents\agent.py", line 129, in run_agent
+    return _agent_loop(
+        question, system_prompt=system_prompt, tool_schemas=tool_schemas, tool_functions=tool_functions,
+        policy=policy, max_steps=max_steps, max_cost_usd=max_cost_usd, max_seconds=max_seconds,
+    )
+  File "C:\Users\Nithishkumar.k\Desktop\poc\piratemonster_dev\rag0-sample\agents\agent.py", line 172, in _agent_loop
+    response = create_chat_completion(
+        model=model, messages=messages, tools=tool_schemas, max_tokens=resolve_max_tokens(400),
+    )
+  File "C:\Users\Nithishkumar.k\Desktop\poc\piratemonster_dev\rag0-sample\rag_chat\client.py", line 201, in create_chat_completion
+    return client.chat.completions.create(**kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Nithishkumar.k\Desktop\poc\piratemonster_dev\rag0-sample\.venv\Lib\site-packages\openai\_utils\_utils.py", line 298, in wrapper
+    return func(*args, **kwargs)
+  File "C:\Users\Nithishkumar.k\Desktop\poc\piratemonster_dev\rag0-sample\.venv\Lib\site-packages\openai\resources\chat\completions\completions.py", line 1296, in create
+    return self._post(
+           ~~~~~~~~~~^
+        "/chat/completions",
+        ^^^^^^^^^^^^^^^^^^^^
+    ...<53 lines>...
+        stream_cls=Stream[ChatCompletionChunk],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Nithishkumar.k\Desktop\poc\piratemonster_dev\rag0-sample\.venv\Lib\site-packages\openai\_base_client.py", line 1381, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Nithishkumar.k\Desktop\poc\piratemonster_dev\rag0-sample\.venv\Lib\site-packages\openai\_base_client.py", line 1154, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.RateLimitError: Error code: 429 - {'error': {'message': 'Rate limit reached for model `openai/gpt-oss-120b` in organization `org_01m1hd35tre5prkbwjb7twh5kw` service tier `on_demand` on tokens per day (TPD): Limit 200000, Used 199149, Requested 1222. Please try again in 2m40.272s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}

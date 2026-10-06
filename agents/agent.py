@@ -19,7 +19,7 @@ from dataclasses import dataclass, field
 from agents.guards import check_tool_call
 from agents.output_validation import validate_answer
 from agents.tools import TOOL_FUNCTIONS, TOOL_SCHEMAS
-from rag_chat.client import create_chat_completion, get_usage, record_usage, reset_usage, resolve_max_tokens
+from rag_chat.client import create_chat_completion, get_usage, record_usage, resolve_max_tokens, usage_scope
 from rag_chat.config import get_settings
 
 AGENT_SYSTEM_PROMPT = (
@@ -120,8 +120,30 @@ def run_agent(
     defenses `policy` switches on. agents/race.py uses the default menu tools
     (agents/tools.py, fixed news_articles/ corpus with known ground truth);
     the live Streamlit "Agent" tab passes agents/live_tools.py instead.
+
+    Usage is tracked in its own scope (Week 10): the result reports only this
+    run's tokens and cost, and they still count toward any caller's total --
+    agents/squad.py runs this as a specialist inside the manager's scope.
     """
-    reset_usage()
+    with usage_scope():
+        return _agent_loop(
+            question, system_prompt=system_prompt, tool_schemas=tool_schemas, tool_functions=tool_functions,
+            policy=policy, max_steps=max_steps, max_cost_usd=max_cost_usd, max_seconds=max_seconds,
+        )
+
+
+def _agent_loop(
+    question: str,
+    *,
+    system_prompt: str,
+    tool_schemas: list[dict],
+    tool_functions: dict,
+    policy: AgentPolicy,
+    max_steps: int,
+    max_cost_usd: float,
+    max_seconds: float,
+) -> AgentResult:
+    """run_agent()'s body; get_usage() here is this run's own usage scope."""
     start = time.perf_counter()
     messages = [
         {"role": "system", "content": system_prompt},

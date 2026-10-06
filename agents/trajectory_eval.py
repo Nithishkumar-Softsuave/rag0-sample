@@ -56,9 +56,14 @@ def _normalize(text: str) -> str:
     Markdown and curly apostrophes were added after reading the first full
     run by hand: correct answers like "the meal is **not** pricier" and "I
     can’t provide the USD amount" were graded as failures.
+
+    Week 10: unicode hyphens and dashes become "-" -- the model wrote "not
+    gluten‑free" with a non-breaking hyphen (U+2011), and a correct answer
+    failed the "not gluten-free" check.
     """
     text = text.lower().replace(" ", " ").replace(" ", " ")
     text = text.replace("’", "'").replace("‘", "'")
+    text = re.sub(r"[‐-―−]", "-", text)
     text = re.sub(r"[*_`]", "", text)
     return re.sub(r"(?<=\d),(?=\d)", "", text)
 

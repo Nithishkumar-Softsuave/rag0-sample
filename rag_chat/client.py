@@ -1,6 +1,10 @@
 """OpenRouter client and embedding helpers."""
+import threading
 import time
-from dataclasses import dataclass
+from collections.abc import Iterator
+from contextlib import contextmanager
+from contextvars import ContextVar
+from dataclasses import dataclass, field
 from functools import lru_cache
 
 from openai import OpenAI, RateLimitError
@@ -20,36 +24,74 @@ class ConfigurationError(RuntimeError):
 PRICING_PER_MILLION_TOKENS = {
     "openai/gpt-4o-mini": {"input": 0.15, "output": 0.60},
     "openai/text-embedding-3-small": {"input": 0.02, "output": 0.0},
+    # WEEK-10 CHANGE: the active chat model (LLM_PROVIDER=groq) was missing,
+    # so every Week 7-9 run reported $0.00 -- the cost column of a race was
+    # meaningless. Groq's list price (Oct 2026); the free tier bills $0, so
+    # this is what the same traffic would cost on a paid plan.
+    "openai/gpt-oss-120b": {"input": 0.15, "output": 0.60},
 }
 
 
 @dataclass
 class Usage:
-    """Accumulated token usage and estimated cost for one request."""
+    """Accumulated token usage and estimated cost for one request.
+
+    WEEK-10 CHANGE: usage scopes nest. A call recorded inside a scope also
+    counts toward every enclosing scope (`parent`), so a multi-agent run's
+    total includes every specialist's calls -- see `usage_scope()`.
+    """
 
     calls: int = 0
     prompt_tokens: int = 0
     completion_tokens: int = 0
     total_tokens: int = 0
     cost_usd: float = 0.0
+    # WEEK-10 CHANGE: time spent sleeping on Groq rate limits (see
+    # create_chat_completion). It inflates wall-clock latency without saying
+    # anything about the agent, so a speed comparison has to see it.
+    rate_limit_waits: int = 0
+    rate_limit_wait_seconds: float = 0.0
+    parent: "Usage | None" = field(default=None, repr=False, compare=False)
 
 
-_usage = Usage()
+# WEEK-10 CHANGE: was a module global that every run_agent() reset at its
+# start -- a specialist agent started by a manager agent wiped the manager's
+# running total, so a team's tokens and cost came out far too low. A
+# ContextVar gives each thread/scope its own current total.
+_current_usage: ContextVar[Usage] = ContextVar("current_usage", default=Usage())
+# Specialists run in parallel threads and add to the same parent totals.
+_usage_lock = threading.Lock()
 
 
 def reset_usage() -> None:
-    """Start a fresh usage total -- call before handling one question."""
-    global _usage
-    _usage = Usage()
+    """Start a fresh, top-level usage total -- call before handling one question."""
+    _current_usage.set(Usage())
 
 
 def get_usage() -> Usage:
-    """Return the usage accumulated since the last `reset_usage()` call."""
-    return _usage
+    """Return the usage accumulated in the current scope (since the last reset)."""
+    return _current_usage.get()
+
+
+@contextmanager
+def usage_scope() -> Iterator[Usage]:
+    """Track one unit of work's usage without losing the enclosing total.
+
+    Calls recorded inside are counted in the yielded Usage *and* in every
+    enclosing scope, so nested agents roll up into their caller's total.
+    Threads start with an empty context: run worker code with
+    `contextvars.copy_context().run(...)` so it nests under the caller.
+    """
+    usage = Usage(parent=_current_usage.get())
+    token = _current_usage.set(usage)
+    try:
+        yield usage
+    finally:
+        _current_usage.reset(token)
 
 
 def record_usage(response_usage, model: str) -> None:
-    """Add one API call's token usage (and estimated cost) to the running total."""
+    """Add one API call's token usage (and estimated cost) to the current scope and its parents."""
     if response_usage is None:
         return
     prompt_tokens = getattr(response_usage, "prompt_tokens", 0) or 0
@@ -58,11 +100,25 @@ def record_usage(response_usage, model: str) -> None:
     rates = PRICING_PER_MILLION_TOKENS.get(model, {"input": 0.0, "output": 0.0})
     cost = (prompt_tokens / 1_000_000) * rates["input"] + (completion_tokens / 1_000_000) * rates["output"]
 
-    _usage.calls += 1
-    _usage.prompt_tokens += prompt_tokens
-    _usage.completion_tokens += completion_tokens
-    _usage.total_tokens += total_tokens
-    _usage.cost_usd += cost
+    with _usage_lock:
+        usage: Usage | None = _current_usage.get()
+        while usage is not None:
+            usage.calls += 1
+            usage.prompt_tokens += prompt_tokens
+            usage.completion_tokens += completion_tokens
+            usage.total_tokens += total_tokens
+            usage.cost_usd += cost
+            usage = usage.parent
+
+
+def _record_rate_limit_wait(seconds: float) -> None:
+    """Count one rate-limit backoff sleep in the current scope and its parents."""
+    with _usage_lock:
+        usage: Usage | None = _current_usage.get()
+        while usage is not None:
+            usage.rate_limit_waits += 1
+            usage.rate_limit_wait_seconds += seconds
+            usage = usage.parent
 
 
 @lru_cache(maxsize=1)
@@ -146,6 +202,7 @@ def create_chat_completion(**kwargs):
         except RateLimitError:
             if attempt == 3:
                 raise
+            _record_rate_limit_wait(delay)
             time.sleep(delay)
             delay *= 2
 

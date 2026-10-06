@@ -1,0 +1,629 @@
+[
+  {
+    "id": 1,
+    "question": "Which shop has the cheapest Filter Coffee?",
+    "kind": "menu",
+    "ground_truth": "Thanjai Ruchi Mess, at Rs. 20 (vs. Rs. 22, 24, 25 at the other three shops).",
+    "runs": {
+      "single": [
+        {
+          "answer": "The cheapest Filter Coffee is sold at **Thanjai Ruchi Mess** for 20 INR.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "Matches the ground truth shop and price",
+          "seconds": 1.7435617999872193,
+          "prompt_tokens": 2004,
+          "completion_tokens": 156,
+          "cost_usd": 0.00039419999999999993,
+          "llm_calls": 2,
+          "tool_calls": [
+            "search_menus"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "The cheapest Filter Coffee is sold at **Thanjai Ruchi Mess** for **₹20 INR**.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "Matches the shop and price given in the reference.",
+          "seconds": 8.400065199995879,
+          "prompt_tokens": 2008,
+          "completion_tokens": 167,
+          "cost_usd": 0.0004014,
+          "llm_calls": 2,
+          "tool_calls": [
+            "search_menus"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "The cheapest Filter Coffee is sold by **Thanjai Ruchi Mess** for **₹20 INR**.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "Correctly identifies Thanjai Ruchi Mess as the cheapest with the price ₹20",
+          "seconds": 8.197278000006918,
+          "prompt_tokens": 1968,
+          "completion_tokens": 141,
+          "cost_usd": 0.00037979999999999996,
+          "llm_calls": 2,
+          "tool_calls": [
+            "search_menus"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "question": "Which is cheaper in Indian Rupees: the Grand Vista Wagyu Beef Burger or the Chettinad Chicken Meals?",
+    "kind": "menu",
+    "ground_truth": "The Chettinad Chicken Meals at Sri Lakshmi Vilas (Rs. 220) is cheaper; the Wagyu Beef Burger at Grand Vista Hotel is 34 SGD, about Rs. 2074.",
+    "runs": {
+      "single": [
+        {
+          "answer": "The Chettinad Chicken Meals (₹ 220) are cheaper than the Grand Vista Wagyu Beef Burger, which costs about ₹ 2,074 after converting its SGD 34 price.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "The answer correctly states the Chettinad Chicken Meals cost Rs.220 and are cheaper than the Wagyu Beef Burger costing about Rs.2074.",
+          "seconds": 23.97198130004108,
+          "prompt_tokens": 4802,
+          "completion_tokens": 361,
+          "cost_usd": 0.0009369,
+          "llm_calls": 4,
+          "tool_calls": [
+            "search_menus",
+            "search_menus",
+            "convert_currency"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "The **Chettinad Chicken Meals** are cheaper.\n\n- **Grand Vista Wagyu Beef Burger** – 34 SGD (≈ 2074 INR) at Grand Vista Hotel  \n- **Chettinad Chicken Meals** – 220 INR at Sri Lakshmi Vilas  \n\nSo the Chettinad Chicken Meals cost about 220 INR, far less than the 2074 INR equivalent for the Wagyu Beef Burger.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "The answer correctly states Chettinad Chicken Meals are cheaper and matches the prices and locations in the reference.",
+          "seconds": 24.36352239997359,
+          "prompt_tokens": 4726,
+          "completion_tokens": 375,
+          "cost_usd": 0.0009339,
+          "llm_calls": 4,
+          "tool_calls": [
+            "search_menus",
+            "search_menus",
+            "convert_currency"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "The Chettinad Chicken Meals (sold at **Sri Lakshmi Vilas**) cost **220 INR**, while the Grand Vista Wagyu Beef Burger (sold at **Grand Vista Hotel**) costs **≈ 2,074 INR** after converting 34 SGD to Indian rupees.  \n\n**Therefore, the Chettinad Chicken Meals are cheaper in Indian rupees.**",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "The answer correctly states the prices and identifies the Chettinad Chicken Meals as cheaper, matching the ground truth.",
+          "seconds": 24.80094389995793,
+          "prompt_tokens": 4825,
+          "completion_tokens": 402,
+          "cost_usd": 0.0009649499999999999,
+          "llm_calls": 4,
+          "tool_calls": [
+            "search_menus",
+            "search_menus",
+            "convert_currency"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": 3,
+    "question": "What's the price of Uttapam at Vaigai Tiffin Center?",
+    "kind": "menu",
+    "ground_truth": "Uttapam is not on Vaigai Tiffin Center's menu, or any menu here -- not found.",
+    "runs": {
+      "single": [
+        {
+          "answer": "I’m sorry, but I couldn’t find a menu entry for “Uttapam” at Vaigai Tiffin Center. I don’t have a price to share.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "The answer correctly states that Uttapam is not found on the menu and thus no price is available.",
+          "seconds": 2.0072457000496797,
+          "prompt_tokens": 1868,
+          "completion_tokens": 88,
+          "cost_usd": 0.000333,
+          "llm_calls": 2,
+          "tool_calls": [
+            "search_menus"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "I’m sorry, but I couldn’t find a menu entry for “Uttapam” at Vaigai Tiffin Center. I don’t have a price to share.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "The answer correctly states that Uttapam is not found on the menu, matching the ground truth.",
+          "seconds": 1.3310853999573737,
+          "prompt_tokens": 1893,
+          "completion_tokens": 113,
+          "cost_usd": 0.00035175,
+          "llm_calls": 2,
+          "tool_calls": [
+            "search_menus"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "I’m sorry, but I couldn’t find a menu listing for “Uttapam” at Vaigai Tiffin Center, so I don’t have a price to provide.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "The answer correctly states that Uttapam is not found on the menu and provides no price.",
+          "seconds": 0.8641237000119872,
+          "prompt_tokens": 1917,
+          "completion_tokens": 138,
+          "cost_usd": 0.00037035,
+          "llm_calls": 2,
+          "tool_calls": [
+            "search_menus"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": 4,
+    "question": "Is Rava Dosa gluten-free?",
+    "kind": "ingredient",
+    "ground_truth": "No. Rava Dosa contains gluten (semolina and maida), per the standard recipe.",
+    "runs": {
+      "single": [
+        {
+          "answer": "Rava Dosa is **not gluten‑free**. The standard recipe includes semolina and maida (wheat flour), which contain gluten. For a severe gluten allergy, it’s best to confirm the exact preparation with the specific restaurant.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "The answer correctly states that Rava Dosa is not gluten‑free and cites semolina and maida as sources of gluten.",
+          "seconds": 3.2018573000095785,
+          "prompt_tokens": 1963,
+          "completion_tokens": 122,
+          "cost_usd": 0.00036764999999999996,
+          "llm_calls": 2,
+          "tool_calls": [
+            "lookup_ingredients"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "Rava Dosa contains semolina, maida (refined wheat flour) and other ingredients that include gluten, so it is **not gluten‑free**. If you have a severe gluten allergy, it’s best to confirm the exact preparation with the specific restaurant you plan to visit.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "The answer correctly states that Rava Dosa contains gluten and is not gluten‑free, matching the ground truth.",
+          "seconds": 2.102463599992916,
+          "prompt_tokens": 1956,
+          "completion_tokens": 124,
+          "cost_usd": 0.00036780000000000005,
+          "llm_calls": 2,
+          "tool_calls": [
+            "lookup_ingredients"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "Rava Dosa is **not gluten‑free** – the standard recipe includes ingredients (such as maida/semolina) that contain gluten. If you have a severe gluten allergy, it’s best to confirm with the specific restaurant you plan to order from.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "The answer correctly states Rava Dosa is not gluten‑free and cites the gluten‑containing ingredients.",
+          "seconds": 5.824730799999088,
+          "prompt_tokens": 2019,
+          "completion_tokens": 182,
+          "cost_usd": 0.00041204999999999996,
+          "llm_calls": 2,
+          "tool_calls": [
+            "lookup_ingredients"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "question": "Which vegan dishes are free from gluten?",
+    "kind": "ingredient",
+    "ground_truth": "Seven: Plain Idli, Thanjavur Vengaya Dosai, Medu Vada, Idiyappam, Sambar Rice, Paruthi Paal, and the Selection of TWG Teas (standard recipes; confirm with the restaurant for a severe allergy).",
+    "runs": {
+      "single": [
+        {
+          "answer": "Here are the vegan dishes that are listed as free from gluten:\n\n- Plain Idli  \n- Medu Vada  \n- Idiyappam  \n- Paruthi Paal  \n- Selection of TWG Teas (English Breakfast / Earl Grey / Chamomile)  \n\nThese dishes are identified as vegan and have no gluten listed among their allergens. (Note: recipes can vary by restaurant, so it’s always best to double‑check with the specific venue if you have a severe gluten allergy.)",
+          "checks_pass": false,
+          "check_reasons": [
+            "missing any of ['vengaya']",
+            "missing any of ['sambar rice']"
+          ],
+          "judge": "CORRECT",
+          "judge_reason": "Provides only a subset of the correct gluten‑free vegan dishes without contradicting the ground truth.",
+          "seconds": 1.4016849999898113,
+          "prompt_tokens": 2057,
+          "completion_tokens": 181,
+          "cost_usd": 0.00041715,
+          "llm_calls": 2,
+          "tool_calls": [
+            "find_dishes"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "Here are the vegan dishes that are listed as gluten‑free:\n\n- Plain Idli  \n- Medu Vada  \n- Idiyappam  \n- Paruthi Paal  \n- Selection of TWG Teas (English Breakfast / Earl Grey / Chamomile)\n\nThese dishes are marked as vegan and have no gluten allergens in the standard recipes. (Note that individual restaurants may vary, so it’s always good to double‑check with the specific venue.)",
+          "checks_pass": false,
+          "check_reasons": [
+            "missing any of ['vengaya']",
+            "missing any of ['sambar rice']"
+          ],
+          "judge": "INCORRECT",
+          "judge_reason": "The answer omits two vegan gluten‑free dishes (Thanjavur Vengaya Dosai and Sambar Rice) listed in the ground truth.",
+          "seconds": 2.294831500039436,
+          "prompt_tokens": 2051,
+          "completion_tokens": 168,
+          "cost_usd": 0.00040845,
+          "llm_calls": 2,
+          "tool_calls": [
+            "find_dishes"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "Here are vegan dishes that are listed as gluten‑free:\n\n- Plain Idli  \n- Medu Vada  \n- Idiyappam  \n- Paruthi Paal  \n- Selection of TWG Teas (English Breakfast / Earl Grey / Chamomile)\n\nThese dishes are marked as vegan and have no gluten allergens in the standard recipes. For any severe gluten allergy, please confirm with the specific restaurant, as recipes can vary.",
+          "checks_pass": false,
+          "check_reasons": [
+            "missing any of ['vengaya']",
+            "missing any of ['sambar rice']"
+          ],
+          "judge": "CORRECT",
+          "judge_reason": "Provides correct gluten‑free vegan dishes but omits two items, without contradicting the ground truth.",
+          "seconds": 5.566929999971762,
+          "prompt_tokens": 2049,
+          "completion_tokens": 162,
+          "cost_usd": 0.00040455,
+          "llm_calls": 2,
+          "tool_calls": [
+            "find_dishes"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "question": "Does the Hainanese Chicken Rice contain sesame?",
+    "kind": "ingredient",
+    "ground_truth": "Yes -- it is made with sesame oil; its allergens are soy, sesame and gluten.",
+    "runs": {
+      "single": [
+        {
+          "answer": "Yes. According to the ingredient data, Hainanese Chicken Rice includes sesame oil, and sesame is listed among its allergens. If you have a sesame allergy, you should confirm with the specific restaurant before ordering.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "The answer correctly states that the dish contains sesame and matches the ground truth.",
+          "seconds": 8.34448499995051,
+          "prompt_tokens": 1984,
+          "completion_tokens": 173,
+          "cost_usd": 0.0004014,
+          "llm_calls": 2,
+          "tool_calls": [
+            "lookup_ingredients"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "Yes. According to the ingredient information for Hainanese Chicken Rice, the dish includes **sesame oil**, so sesame is present (listed as a sesame allergen). If you have a severe sesame allergy, it’s best to double‑check with the specific restaurant before ordering.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "The answer correctly states that sesame oil is used and sesame is an allergen, matching the ground truth.",
+          "seconds": 9.485471500025596,
+          "prompt_tokens": 1984,
+          "completion_tokens": 172,
+          "cost_usd": 0.0004008,
+          "llm_calls": 2,
+          "tool_calls": [
+            "lookup_ingredients"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "Yes, the standard recipe for Hainanese Chicken Rice includes **sesame oil**, so it contains sesame. (Allergens listed: soy, sesame, gluten.)",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "The assistant correctly states that Hainanese Chicken Rice contains sesame oil and lists the same allergens as the reference.",
+          "seconds": 2.1176570000243373,
+          "prompt_tokens": 1974,
+          "completion_tokens": 97,
+          "cost_usd": 0.0003543,
+          "llm_calls": 2,
+          "tool_calls": [
+            "lookup_ingredients"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "question": "I'm allergic to dairy. Is Masala Dosa safe for me, and which shop sells it cheapest?",
+    "kind": "combined",
+    "ground_truth": "Not safe: the standard recipe uses ghee (dairy). Cheapest is Sri Kaveri Bhavan at Rs. 70 (Sri Lakshmi Vilas: Rs. 75).",
+    "runs": {
+      "single": [
+        {
+          "answer": "Masala Dosa contains dairy (ghee) — so it is **not safe** for someone with a dairy allergy.  \n\nThe cheapest restaurant that offers Masala Dosa, according to the menu data, is **Sri Kaveri Bhavan**, priced at **₹70 INR**.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "Answer correctly states it's not safe and gives the cheapest shop and price matching the ground truth.",
+          "seconds": 15.83337239996763,
+          "prompt_tokens": 3505,
+          "completion_tokens": 309,
+          "cost_usd": 0.00071115,
+          "llm_calls": 3,
+          "tool_calls": [
+            "lookup_ingredients",
+            "search_menus"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "Masala Dosa contains dairy (ghee) and is listed with dairy as an allergen, so it is **not safe for a dairy‑allergic person**.  \n\nThe cheapest restaurant that offers Masala Dosa on its menu is **Sri Kaveri Bhavan**, where it costs **₹70 INR**.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "The answer correctly states the dish is unsafe due to dairy and identifies Sri Kaveri Bhavan as the cheapest at Rs. 70.",
+          "seconds": 15.907576900033746,
+          "prompt_tokens": 3525,
+          "completion_tokens": 305,
+          "cost_usd": 0.0007117499999999999,
+          "llm_calls": 3,
+          "tool_calls": [
+            "lookup_ingredients",
+            "search_menus"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "Masala Dosa contains dairy (ghee) and is listed with “dairy” among its allergens, so it is **not safe** for a dairy‑allergic customer.  \n\nThe cheapest shop that offers Masala Dosa is **Sri Kaveri Bhavan**, priced at **₹70 INR**.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "The answer correctly states it is not safe due to dairy and correctly identifies Sri Kaveri Bhavan at Rs. 70 as the cheapest.",
+          "seconds": 12.125430200016126,
+          "prompt_tokens": 3567,
+          "completion_tokens": 326,
+          "cost_usd": 0.00073065,
+          "llm_calls": 3,
+          "tool_calls": [
+            "lookup_ingredients",
+            "search_menus"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "question": "I'm vegan. Is Medu Vada vegan, and where is it cheapest?",
+    "kind": "combined",
+    "ground_truth": "Yes, Medu Vada is vegan (standard recipe). Cheapest at Vaigai Tiffin Center, Rs. 35.",
+    "runs": {
+      "single": [
+        {
+          "answer": "Medu Vada is listed as a vegan dish (its standard ingredients are urad dal, green chili, ginger, curry leaves, black pepper and oil for deep‑frying).\n\nAmong the restaurants whose menus were searched, the lowest price for Medu Vada (served as 2 pieces) is **₹35 at Vaigai Tiffin Center**. All listed prices are in Indian rupees, so no currency conversion is needed.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "The answer correctly states Medu Vada is vegan and cites the cheapest price of Rs. 35 at Vaigai Tiffin Center, matching the ground truth.",
+          "seconds": 9.47764160000952,
+          "prompt_tokens": 3593,
+          "completion_tokens": 350,
+          "cost_usd": 0.00074895,
+          "llm_calls": 3,
+          "tool_calls": [
+            "lookup_ingredients",
+            "search_menus"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "Medu Vada is listed as a **vegan** dish (made from urad dal, green chili, ginger, curry leaves, black pepper and deep‑fried in oil). As always, if you have any concerns you should double‑check with the specific restaurant.\n\nAmong the restaurants in the menu database, the lowest price for a serving (2 pieces) is:\n\n- **Vaigai Tiffin Center** – 35 INR for “Medu Vada (2 pcs)”\n\nAll other listed prices are higher (40 INR at Thanjai Ruchi Mess, 42 INR at Sri Lakshmi Vilas, 45 INR at Sri Kaveri Bhavan).",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "Matches the ground truth on both vegan status and cheapest location/price.",
+          "seconds": 14.073654900013935,
+          "prompt_tokens": 3464,
+          "completion_tokens": 340,
+          "cost_usd": 0.0007236,
+          "llm_calls": 3,
+          "tool_calls": [
+            "lookup_ingredients",
+            "search_menus"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "**Vegan status:** According to the ingredient lookup, Medu Vada (made from urad dal, green chili, ginger, curry leaves, black pepper and deep‑fried in oil) is classified as **vegan**.\n\n**Cheapest price:** Among the restaurants that list Medu Vada on their menus, the lowest price is at **Vaigai Tiffin Center**, where a serving of Medu Vada (2 pcs) costs **35 INR**.  \n\nSo, Medu Vada is vegan, and the cheapest option in the current menu data is at Vaigai Tiffin Center for 35 INR.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "The answer correctly states Medu Vada is vegan and cheapest at Vaigai Tiffin Center for Rs. 35.",
+          "seconds": 20.160338999994565,
+          "prompt_tokens": 3939,
+          "completion_tokens": 633,
+          "cost_usd": 0.00097065,
+          "llm_calls": 3,
+          "tool_calls": [
+            "lookup_ingredients",
+            "search_menus"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        }
+      ]
+    }
+  },
+  {
+    "id": 9,
+    "question": "Is Ven Pongal safe for someone with a tree-nut allergy, and what does it cost at each shop?",
+    "kind": "combined",
+    "ground_truth": "No -- it contains cashews (tree nuts). Sri Kaveri Bhavan Rs. 55, Sri Lakshmi Vilas Rs. 58.",
+    "runs": {
+      "single": [
+        {
+          "answer": "**Allergen safety**\n\nVen Pongal contains **tree nuts** (cashews) among its standard ingredients, so it is **not safe** for someone with a tree‑nut allergy. For a severe allergy, the customer should confirm directly with the restaurant, as recipes can vary.\n\n**Price at each shop**\n\n| Shop | Price (INR) |\n|------|-------------|\n| Sri Kaveri Bhavan | ₹55.0 |\n| Sri Lakshmi Vilas | ₹58.0 |\n\nThese prices are taken from the current menu listings for Ven Pongal.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "The answer correctly states it is not safe due to cashews and provides the exact prices for both shops as in the ground truth.",
+          "seconds": 7.837319800048135,
+          "prompt_tokens": 3387,
+          "completion_tokens": 251,
+          "cost_usd": 0.00065865,
+          "llm_calls": 3,
+          "tool_calls": [
+            "search_menus",
+            "lookup_ingredients"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "**Allergy safety**  \nThe standard recipe for **Ven Pongal** contains cashews, which are classified as tree nuts. Because of this, the dish is **not safe for someone with a tree‑nut allergy**. (The ingredient data comes from the `lookup_ingredients` tool, which lists “cashews” and notes “tree nuts” as allergens.)\n\n**Price at each shop**  \n\n| Shop | Item (as listed) | Price | Currency |\n|------|------------------|-------|----------|\n| Sri Kaveri Bhavan | Ven Pongal | 55.0 | INR |\n| Sri Lakshmi Vilas | Ven Pongal | 58.0 | INR |\n\nThese prices are taken from the `search_menus` tool results. Both shops list the dish under the same name, so the prices can be compared directly without currency conversion.",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "Provides the same allergy information and correct prices for both shops.",
+          "seconds": 16.266387699986808,
+          "prompt_tokens": 3582,
+          "completion_tokens": 451,
+          "cost_usd": 0.0008079000000000001,
+          "llm_calls": 3,
+          "tool_calls": [
+            "lookup_ingredients",
+            "search_menus"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        },
+        {
+          "answer": "**Allergy safety**  \nVen Pongal contains cashews, which are classified as **tree nuts**. Therefore it is **not safe for someone with a tree‑nut allergy**. (The ingredient list comes from the lookup tool, which notes the presence of “tree nuts”. For a severe allergy, you should still confirm with the restaurant.)\n\n**Price at each shop**  \n\n| Shop | Price (INR) |\n|------|-------------|\n| Sri Kaveri Bhavan | ₹55.0 |\n| Sri Lakshmi Vilas | ₹58.0 |\n\n(Prices are taken from the menu‑search tool; both shops list the dish in Indian rupees.)",
+          "checks_pass": true,
+          "check_reasons": [],
+          "judge": "CORRECT",
+          "judge_reason": "Allergy info and shop prices exactly match the ground truth",
+          "seconds": 8.175920100009535,
+          "prompt_tokens": 3510,
+          "completion_tokens": 379,
+          "cost_usd": 0.0007539000000000001,
+          "llm_calls": 3,
+          "tool_calls": [
+            "lookup_ingredients",
+            "search_menus"
+          ],
+          "stopped_reason": "done",
+          "rate_limit_waits": 0,
+          "rate_limit_wait_seconds": 0.0,
+          "detail": {}
+        }
+      ]
+    }
+  }
+]
