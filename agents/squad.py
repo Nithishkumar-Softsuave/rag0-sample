@@ -39,6 +39,7 @@ from dataclasses import dataclass, field
 from agents.agent import HARDENED, VALIDATION_FAILED_ANSWER, AgentPolicy, AgentResult, AgentStep, run_agent
 from agents.mcp_host import DEFAULT_CONFIG, McpHost, load_config
 from agents.output_validation import validate_answer
+from observability.tracing import span
 from rag_chat.client import create_chat_completion, record_usage, resolve_max_tokens, usage_scope
 from rag_chat.config import get_settings
 
@@ -63,11 +64,11 @@ class Specialist:
 MENU_SPECIALIST = Specialist(
     name="menu",
     description="Menu prices: which shops sell a dish, at what price, cheapest/priciest, currency conversion.",
-    tools=("search_menus", "convert_currency"),
+    tools=("search_menus", "price_dishes", "convert_currency"),
     system_prompt=(
         "You are the menu & price specialist on a restaurant team. You only handle "
         "prices: which shops sell an item and for how much. Call search_menus for "
-        "every item in your task. If prices are in different currencies, convert "
+        "every item in your task (price_dishes for several at once). If prices are in different currencies, convert "
         "them with convert_currency before comparing -- only when currencies "
         "actually differ, and only on a price a search returned. Name the shop for "
         "every price. If a search result carries a `warning` that the matches are "
@@ -192,15 +193,19 @@ def parse_plan(text: str, specialists: tuple[Specialist, ...], question: str) ->
     return plan
 
 
-def _manager_call(system_prompt: str, user_content: str, max_tokens: int) -> str:
+def _manager_call(system_prompt: str, user_content: str, max_tokens: int, step: str) -> str:
     model = get_settings().chat_model
-    response = create_chat_completion(
-        model=model,
-        messages=[{"role": "system", "content": system_prompt}, {"role": "user", "content": user_content}],
-        max_tokens=resolve_max_tokens(max_tokens),
-    )
-    record_usage(response.usage, model)
-    return response.choices[0].message.content or ""
+    with span(f"manager:{step}", kind="llm", model=model) as llm_span:
+        response = create_chat_completion(
+            model=model,
+            messages=[{"role": "system", "content": system_prompt}, {"role": "user", "content": user_content}],
+            max_tokens=resolve_max_tokens(max_tokens),
+        )
+        record_usage(response.usage, model)
+        text = response.choices[0].message.content or ""
+        if llm_span is not None:
+            llm_span.set(finish_reason=getattr(response.choices[0], "finish_reason", None), output=text)
+        return text
 
 
 def _tools_for(specialist: Specialist, host: McpHost) -> tuple[list[dict], dict]:
@@ -239,7 +244,7 @@ def _run_squad(
     by_name = {s.name: s for s in specialists}
 
     # 1. Plan: the manager splits the question.
-    plan_text = _manager_call(PLANNER_PROMPT.format(roster=_roster(specialists)), question, max_tokens=300)
+    plan_text = _manager_call(PLANNER_PROMPT.format(roster=_roster(specialists)), question, max_tokens=300, step="plan")
     plan = parse_plan(plan_text, specialists, question)
     manager_calls = 1
     jobs = [(name, task) for name, task in plan.items() if task]
@@ -255,7 +260,7 @@ def _run_squad(
         schemas, functions = _tools_for(by_name[name], host)
         result = run_agent(
             task, system_prompt=by_name[name].system_prompt,
-            tool_schemas=schemas, tool_functions=functions, policy=policy,
+            tool_schemas=schemas, tool_functions=functions, policy=policy, trace_name=f"specialist:{name}",
         )
         return Assignment(specialist=name, task=task, result=result)
 
@@ -273,22 +278,28 @@ def _run_squad(
         f"[{a.specialist} specialist] task: {a.task}\nreport: {a.result.answer}" for a in assignments
     )
     briefing = f"Customer question: {question}\n\nSpecialist reports:\n{reports}"
-    answer = _manager_call(SYNTHESIS_PROMPT, briefing, max_tokens=500)
+    answer = _manager_call(SYNTHESIS_PROMPT, briefing, max_tokens=500, step="synthesize")
     manager_calls += 1
 
     # 4. Validate against the specialists' real tool results (Week 8 rules):
     #    a figure the manager invented while merging is caught here.
     all_steps = [step for a in assignments for step in a.result.steps]
-    issues = validate_answer(answer, all_steps, SYNTHESIS_PROMPT) if policy.validate_output else []
+    with span("validate", kind="check") as check_span:
+        issues = validate_answer(answer, all_steps, SYNTHESIS_PROMPT) if policy.validate_output else []
+        if check_span is not None:
+            check_span.set(answer=answer, issues=issues, enabled=policy.validate_output)
     for _ in range(policy.max_validation_retries if issues else 0):
         retry = (
             f"{briefing}\n\nYour previous draft failed an automated check: {'; '.join(issues)}. "
             f"Rewrite it using only figures in the reports, with no links or payment details.\n\n"
             f"Previous draft:\n{answer}"
         )
-        answer = _manager_call(SYNTHESIS_PROMPT, retry, max_tokens=500)
+        answer = _manager_call(SYNTHESIS_PROMPT, retry, max_tokens=500, step="synthesize_retry")
         manager_calls += 1
-        issues = validate_answer(answer, all_steps, SYNTHESIS_PROMPT)
+        with span("validate", kind="check") as check_span:
+            issues = validate_answer(answer, all_steps, SYNTHESIS_PROMPT)
+            if check_span is not None:
+                check_span.set(answer=answer, issues=issues)
     if issues:
         return SquadResult(
             answer=VALIDATION_FAILED_ANSWER, plan=plan, assignments=assignments,

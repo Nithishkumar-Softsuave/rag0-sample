@@ -1,0 +1,13 @@
+# Week 11 after-fix comparison: 12 of the 24 baseline questions (all 5 max_steps failures + a mix)
+u_001	I'm dairy-free. What can I have instead of Masala Dosa?
+u_002	what's the cheapest filter coffee
+u_005	lactose intolerant here, what sweet can I get instead of Paal Payasam?
+u_006	Can I swap the Filter Coffee for something without dairy?
+u_008	how much is Medu Vada at Vaigai
+u_009	I avoid ghee. Suggest a breakfast swap for Ven Pongal
+u_011	dairy allergy - what's a good drink instead of badam milk and where is it cheapest?
+u_012	Is there any dessert that's dairy free?
+u_013	Compare Wagyu burger and Chettinad Chicken Meals price in INR
+u_019	cheapest vegan breakfast item?
+u_021	I can't have dairy; is the Long Black coffee okay?
+u_022	Swap Masala Dosa for a dairy-free dosa - which one and how much?

@@ -10,7 +10,7 @@ it is a server any MCP host can discover and call.
     python -m mcp_servers.menu_server --transport http     # remote, needs MENU_MCP_TOKENS
 
 Offers all three MCP primitives:
-- tools      search_menus, convert_currency  (the model decides to call these)
+- tools      search_menus, price_dishes, convert_currency  (the model decides to call these)
 - resource   menu://shops                   (read-only data the host/user can pull in)
 - prompt     compare_item_prices            (a reusable prompt template a user picks)
 
@@ -42,7 +42,9 @@ INSTRUCTIONS = (
     "If a search result carries a `warning` that the matches are different "
     "dishes, list each dish by its full name and never call one of them the "
     "cheapest across different dishes. If a search has a `note` that nothing "
-    "matched, say it was not found instead of guessing."
+    "matched, say it was not found instead of guessing. To price several "
+    "dishes -- for example every alternative in a swap -- call "
+    "price_dishes once with all of them, not search_menus once per dish."
 )
 
 # Every tool here only reads a fixed local catalog: no side effects, same
@@ -62,6 +64,14 @@ class MenuSearchResult(BaseModel):
     matches: list[MenuMatch]
     warning: str | None = Field(None, description="Set when the matches are DIFFERENT dishes that must not be compared as one item.")
     note: str | None = Field(None, description="Set when nothing matched.")
+
+
+class ItemSearchResult(MenuSearchResult):
+    searched: str = Field(description="The item this result is for.")
+
+
+class BulkSearchResult(BaseModel):
+    results: list[ItemSearchResult]
 
 
 class Conversion(BaseModel):
@@ -87,6 +97,40 @@ def search_menus(
     if not item.strip():
         raise ToolError("item must not be blank -- pass the dish or drink name to search for.")
     return MenuSearchResult.model_validate(search_menus_for_agent(item))
+
+
+MAX_BULK_ITEMS = 10
+
+
+def price_dishes(
+    items: Annotated[
+        list[Annotated[str, Field(min_length=1, max_length=100)]],
+        Field(min_length=1, max_length=MAX_BULK_ITEMS, description="Items to search for, e.g. ['Plain Idli', 'Medu Vada']."),
+    ],
+) -> BulkSearchResult:
+    """Search every restaurant's menu for several items in one call.
+
+    Same result as search_menus for each item, in order. Week 11: the live
+    logs showed swap questions pricing alternatives one search_menus call at
+    a time -- each call re-sends the whole conversation to the model, so a
+    five-dish swap cost ~5x a normal answer and ran out of steps before
+    answering. One call for all of them fixes both.
+
+    It was first named search_menus_many. In the first after-fix run, 2 of
+    6 requests then crashed on a garbled tool name,
+    'search_menus<|channel|>commentary' (never seen in the 24 baseline
+    requests). The likely cause is two tool names sharing the
+    'search_menus' prefix, so it got a name no other tool starts with.
+    """
+    seen: list[str] = []
+    for item in items:
+        if not item.strip():
+            raise ToolError("items must not contain a blank name.")
+        if item.strip().lower() not in (s.lower() for s in seen):
+            seen.append(item.strip())
+    return BulkSearchResult(results=[
+        ItemSearchResult(searched=item, **search_menus_for_agent(item)) for item in seen
+    ])
 
 
 def convert_currency(
@@ -134,6 +178,7 @@ def build_server(**auth) -> MCPServer:
         **auth,
     )
     server.tool(title="Search menus", annotations=READ_ONLY)(search_menus)
+    server.tool(title="Search menus for several items", annotations=READ_ONLY)(price_dishes)
     server.tool(title="Convert currency", annotations=READ_ONLY)(convert_currency)
     server.resource("menu://shops", name="shops", title="Shops in the catalog", mime_type="application/json")(
         shops_resource

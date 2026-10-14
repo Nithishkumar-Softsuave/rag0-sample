@@ -7,3 +7,6 @@ data/query-log.jsonl
 .streamlit/
 docs
 chroma_persistent_storage
+data/traces*.jsonl
+data/drill_traces.jsonl
+observability/traffic/*.out

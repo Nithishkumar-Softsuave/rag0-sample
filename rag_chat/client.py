@@ -7,7 +7,7 @@ from contextvars import ContextVar
 from dataclasses import dataclass, field
 from functools import lru_cache
 
-from openai import OpenAI, RateLimitError
+from openai import BadRequestError, OpenAI, RateLimitError
 
 from rag_chat.config import get_settings
 
@@ -28,7 +28,12 @@ PRICING_PER_MILLION_TOKENS = {
     # so every Week 7-9 run reported $0.00 -- the cost column of a race was
     # meaningless. Groq's list price (Oct 2026); the free tier bills $0, so
     # this is what the same traffic would cost on a paid plan.
-    "openai/gpt-oss-120b": {"input": 0.15, "output": 0.60},
+    "openai/gpt-oss-120b": {"input": 0.15, "cached_input": 0.075, "output": 0.60},
+    # WEEK-11 CHANGE: Groq caches prompt prefixes automatically and bills a
+    # cached input token at half price (console.groq.com/docs/prompt-caching).
+    # Week 11's first live traces showed 768 cached tokens on most calls, so
+    # pricing every prompt token at the full rate over-stated the cost.
+    "openai/gpt-oss-20b": {"input": 0.075, "cached_input": 0.0375, "output": 0.30},
 }
 
 
@@ -46,11 +51,15 @@ class Usage:
     completion_tokens: int = 0
     total_tokens: int = 0
     cost_usd: float = 0.0
+    cached_prompt_tokens: int = 0  # WEEK-11 CHANGE: part of prompt_tokens served from the provider's cache
     # WEEK-10 CHANGE: time spent sleeping on Groq rate limits (see
     # create_chat_completion). It inflates wall-clock latency without saying
     # anything about the agent, so a speed comparison has to see it.
     rate_limit_waits: int = 0
     rate_limit_wait_seconds: float = 0.0
+    # WEEK-11 CHANGE: calls re-sent because the provider rejected a malformed
+    # tool call the model generated (see create_chat_completion).
+    malformed_tool_call_retries: int = 0
     parent: "Usage | None" = field(default=None, repr=False, compare=False)
 
 
@@ -98,7 +107,12 @@ def record_usage(response_usage, model: str) -> None:
     completion_tokens = getattr(response_usage, "completion_tokens", 0) or 0
     total_tokens = getattr(response_usage, "total_tokens", 0) or (prompt_tokens + completion_tokens)
     rates = PRICING_PER_MILLION_TOKENS.get(model, {"input": 0.0, "output": 0.0})
-    cost = (prompt_tokens / 1_000_000) * rates["input"] + (completion_tokens / 1_000_000) * rates["output"]
+    cached = min(cached_prompt_tokens(response_usage), prompt_tokens)
+    cost = (
+        ((prompt_tokens - cached) / 1_000_000) * rates["input"]
+        + (cached / 1_000_000) * rates.get("cached_input", rates["input"])
+        + (completion_tokens / 1_000_000) * rates["output"]
+    )
 
     with _usage_lock:
         usage: Usage | None = _current_usage.get()
@@ -108,7 +122,29 @@ def record_usage(response_usage, model: str) -> None:
             usage.completion_tokens += completion_tokens
             usage.total_tokens += total_tokens
             usage.cost_usd += cost
+            usage.cached_prompt_tokens += cached
             usage = usage.parent
+
+
+def cached_prompt_tokens(response_usage) -> int:
+    """WEEK-11 CHANGE: prompt tokens the provider served from its prompt cache (0 if it doesn't say)."""
+    details = getattr(response_usage, "prompt_tokens_details", None)
+    return (getattr(details, "cached_tokens", 0) or 0) if details is not None else 0
+
+
+def _record_malformed_tool_call_retry() -> None:
+    with _usage_lock:
+        usage: Usage | None = _current_usage.get()
+        while usage is not None:
+            usage.malformed_tool_call_retries += 1
+            usage = usage.parent
+
+
+def _is_malformed_tool_call(error: BadRequestError) -> bool:
+    """Groq's 400 for a tool call the model garbled, e.g. the name 'search_menus<|channel|>commentary'."""
+    body = error.body if isinstance(error.body, dict) else {}
+    detail = body.get("error", body) if isinstance(body.get("error", body), dict) else {}
+    return detail.get("code") == "tool_use_failed" or "tool_use_failed" in str(error)
 
 
 def _record_rate_limit_wait(seconds: float) -> None:
@@ -183,6 +219,9 @@ def get_chat_client() -> OpenAI:
     return OpenAI(base_url="https://api.groq.com/openai/v1", api_key=settings.groq_api_key)
 
 
+MAX_MALFORMED_TOOL_CALL_RETRIES = 2
+
+
 def create_chat_completion(**kwargs):
     """TEMP: what every chat-completion call site should call instead of
     `get_chat_client().chat.completions.create(...)` directly.
@@ -193,18 +232,32 @@ def create_chat_completion(**kwargs):
     above) can hit well before anything is actually wrong. The cap resets
     every minute, so a short backoff and retry is enough -- this is not
     needed (and barely triggers) against OpenRouter, whose calls stay small.
+
+    WEEK-11 CHANGE: a second fallback. gpt-oss sometimes leaks its own
+    format tokens into a tool name ('search_menus<|channel|>commentary');
+    Groq rejects the whole call with a 400 `tool_use_failed`, and before
+    this the customer got a crash (live trace req_8e279f00d304). The model
+    is sampled, so the same request usually comes back well-formed: re-send
+    it, up to MAX_MALFORMED_TOOL_CALL_RETRIES times, and count each retry.
     """
     client = get_chat_client()
     delay = 5.0
-    for attempt in range(4):
+    rate_limited = malformed = 0
+    while True:
         try:
             return client.chat.completions.create(**kwargs)
         except RateLimitError:
-            if attempt == 3:
+            rate_limited += 1
+            if rate_limited == 4:
                 raise
             _record_rate_limit_wait(delay)
             time.sleep(delay)
             delay *= 2
+        except BadRequestError as error:
+            malformed += 1
+            if not _is_malformed_tool_call(error) or malformed > MAX_MALFORMED_TOOL_CALL_RETRIES:
+                raise
+            _record_malformed_tool_call_retry()
 
 
 def get_embeddings(texts: list[str]) -> list[list[float]]:

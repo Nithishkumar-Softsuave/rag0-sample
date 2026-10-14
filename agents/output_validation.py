@@ -13,6 +13,12 @@ controls what it can *say*. Three rules, all plain code, no second LLM call:
    testing came from an injected instruction.
 3. No verbatim chunk (8+ consecutive words) of the system prompt -- the
    system-prompt-leak attack.
+4. WEEK-11 CHANGE: every "X is dairy-free"-style claim must be backed by an
+   ingredient result *in this run* that lists X without that allergen
+   (agents/allergen_claims.py). The Week 11 support drill's bad answer
+   called Ven Pongal dairy-free after pricing it but never looking it up --
+   it has ghee. Money figures were grounded since Week 8; allergen facts,
+   the ones that can hurt someone, were not.
 
 Known limit: rule 1 cannot catch a poisoned document that states a false
 price, because that price *is* in the tool results. See
@@ -23,6 +29,7 @@ from __future__ import annotations
 import re
 from itertools import combinations
 
+from agents.allergen_claims import check_claims
 from agents.guards import grounded_amounts, is_grounded, price_like_numbers
 
 _LINK = re.compile(r"https?://|www\.", re.IGNORECASE)
@@ -79,4 +86,9 @@ def validate_answer(answer: str, steps, system_prompt: str) -> list[str]:
         issues.append("contains an injected canary marker")
     if system_prompt and leaks_system_prompt(answer, system_prompt):
         issues.append("repeats part of the system prompt verbatim")
+    contradicted, unverified = check_claims(answer, [step.result for step in steps if step.tool and not step.blocked])
+    for claim in contradicted:
+        issues.append(f"says {claim.dish} is {claim.allergen}-free, but its ingredient lookup lists {claim.allergen}")
+    for claim in unverified:
+        issues.append(f"says {claim.dish} is {claim.allergen}-free without looking up its ingredients in this run")
     return issues

@@ -36,7 +36,7 @@ def host_for(*configs: ServerConfig, **servers: MCPServer) -> McpHost:
 
 def test_menu_server_tools_are_discovered_with_schemas() -> None:
     with host_for(MENU, menu=menu_server.build_server()) as host:
-        assert set(host.tools) == {"search_menus", "convert_currency"}
+        assert set(host.tools) == {"search_menus", "price_dishes", "convert_currency"}
         schema = next(s for s in host.tool_schemas if s["function"]["name"] == "convert_currency")
         assert schema["function"]["parameters"]["properties"]["from_currency"]["enum"] == ["INR", "SGD"]
 
@@ -196,7 +196,7 @@ def test_unreachable_server_is_recorded_not_fatal() -> None:
 def test_real_stdio_servers_from_mcp_config() -> None:
     """Spawns both servers as subprocesses, exactly as the CLI does."""
     with McpHost(load_config()) as host:
-        assert set(host.tools) == {"search_menus", "convert_currency", "lookup_ingredients", "find_dishes"}
+        assert set(host.tools) == {"search_menus", "price_dishes", "convert_currency", "lookup_ingredients", "find_dishes"}
         assert host.call("lookup_ingredients", {"dish": "Filter Coffee"})["matches"][0]["allergens"] == ["dairy"]
 
 
@@ -213,3 +213,17 @@ def test_static_token_verifier() -> None:
     token = anyio.run(verifier.verify_token, "tok-b")
     assert token.client_id == "bob" and token.resource == "http://h/mcp"
     assert anyio.run(verifier.verify_token, "tok-c") is None
+
+
+def test_price_dishes_prices_several_items_in_one_call() -> None:
+    """Week 11: swap questions priced alternatives one call at a time and ran out of steps."""
+    with host_for(MENU, menu=menu_server.build_server()) as host:
+        result = host.tool_functions["price_dishes"]({"items": ["Plain Idli", "Medu Vada", "plain idli", "Uttapam"]})
+    assert [r["searched"] for r in result["results"]] == ["Plain Idli", "Medu Vada", "Uttapam"]  # deduped, in order
+    idli, vada, uttapam = result["results"]
+    assert {m["shop"]: m["price"] for m in idli["matches"]}["Vaigai Tiffin Center"] == 30.0
+    assert min(m["price"] for m in vada["matches"]) == 35.0
+    assert uttapam["matches"] == [] and "not found" in uttapam["note"]
+    with host_for(MENU, menu=menu_server.build_server()) as host:
+        too_many = host.tool_functions["price_dishes"]({"items": [f"dish {n}" for n in range(11)]})
+    assert "error" in too_many

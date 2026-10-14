@@ -1,0 +1,26 @@
+# Week 11 live traffic: realistic Track B questions, heavy on dairy swaps.
+# Format: user_id<TAB>question
+u_001	I'm dairy-free. What can I have instead of Masala Dosa?
+u_002	what's the cheapest filter coffee
+u_003	my son can't have milk - can he have the Ven Pongal?
+u_004	Is Paruthi Paal ok for a vegan? it says paal
+u_005	lactose intolerant here, what sweet can I get instead of Paal Payasam?
+u_006	Can I swap the Filter Coffee for something without dairy?
+u_007	Which dosa has no gluten?
+u_008	how much is Medu Vada at Vaigai
+u_009	I avoid ghee. Suggest a breakfast swap for Ven Pongal
+u_010	Is Curd Rice vegan?
+u_011	dairy allergy - what's a good drink instead of badam milk and where is it cheapest?
+u_012	Is there any dessert that's dairy free?
+u_013	Compare Wagyu burger and Chettinad Chicken Meals price in INR
+u_014	Does the Kaya toast have butter?
+u_015	vegan swap for curd rice?
+u_003	ok what about Rava Kesari for him then
+u_016	nut allergy: is Ven Pongal safe?
+u_017	Which thali is dairy free?
+u_018	Jigarthanda without dairy possible?
+u_019	cheapest vegan breakfast item?
+u_020	Tiramisu has alcohol?
+u_021	I can't have dairy; is the Long Black coffee okay?
+u_022	Swap Masala Dosa for a dairy-free dosa - which one and how much?
+u_023	Is Idiyappam gluten free?
